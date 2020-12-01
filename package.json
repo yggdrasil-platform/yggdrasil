@@ -1,0 +1,31 @@
+{
+  "name": "yggdrasil-local",
+  "version": "0.0.1",
+  "description": "The local version of the Yggdrasil platform",
+  "main": "docker-compose.yml",
+  "author": {
+    "name": "Kieran O'Neill",
+    "email": "kieran.oneill@protonmail.com",
+    "url": "https://kieranoneill.com"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/kieranroneill/yggdrasil-local"
+  },
+  "license": "See LICESNSE.md",
+  "private": true,
+  "engines": {
+    "node": ">=12.6.0"
+  },
+  "devDependencies": {
+    "@commitlint/cli": "^11.0.0",
+    "@commitlint/config-conventional": "^11.0.0",
+    "@semantic-release/changelog": "^5.0.1",
+    "@semantic-release/commit-analyzer": "^8.0.1",
+    "@semantic-release/git": "^9.0.0",
+    "@semantic-release/github": "^7.2.0",
+    "@semantic-release/release-notes-generator": "^9.0.1",
+    "husky": "^4.3.0",
+    "semantic-release": "^17.3.0"
+  }
+}
