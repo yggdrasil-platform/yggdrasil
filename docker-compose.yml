@@ -26,6 +26,6 @@ services:
       context: ./images/postgres12-alpine
     environment:
       POSTGRES_PASSWORD: password
-      POSTGRES_USER: postgres
+      POSTGRES_USER: admin
     ports:
       - "3011:5432"

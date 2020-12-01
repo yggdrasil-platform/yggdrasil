@@ -77,7 +77,7 @@ awesome-service:
 ### Database access
 
 Each database can be accessed locally using the below host and ports. For each connection use the following credentials:
-- Username: `postgres`
+- Username: `admin`
 - Password: `password`
 
 | Service                 | Host + port                                    |
