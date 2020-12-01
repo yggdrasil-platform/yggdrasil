@@ -1,0 +1,31 @@
+version: '3.5'
+
+services:
+  # Services.
+  valkyrie:
+    container_name: valkyrie
+    image: yggdrasil/valkyrie
+    build:
+      context: ./images/node12.6.0-alpine
+    volumes:
+      - ../valkyrie:/usr/app:delegated
+    env_file:
+      - ./.config/valkyrie/.env
+    working_dir: /usr/app
+    ports:
+    - "3010:3010"
+    command: yarn start
+    depends_on:
+      - valkyrie_db
+
+  # Databases.
+  valkyrie_db:
+    container_name: valkyrie_db
+    image: yggdrasil/valkyrie_db
+    build:
+      context: ./images/postgres12-alpine
+    environment:
+      POSTGRES_PASSWORD: password
+      POSTGRES_USER: postgres
+    ports:
+      - "3011:5432"
