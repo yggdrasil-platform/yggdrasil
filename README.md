@@ -13,7 +13,7 @@ Runs the local Yggdrasil platform using Docker Compose.
 
 ## Prerequisites
 
-* Install [NodeJS 12.6.0+](https://nodejs.org/en/download/).
+* Install [NodeJS 14.15.1+](https://nodejs.org/en/download/).
 * Install [Yarn](https://yarnpkg.com/).
 * Install [Docker 17.12.0+](https://docs.docker.com/install/).
 * Install [Docker Compose](https://docs.docker.com/compose/install/).
@@ -59,13 +59,13 @@ make update
 ```yaml
 awesome-service:
     container_name: awesome_service
-    image: kieraroneill/awesome_service
+    image: yggdrasil/awesome_service
     build:
-      context: ./images/node12.6.0-alpine # Use one of the images in the ./images directory, or roll your own!
+      context: images/node14.15.1-alpine # Use one of the images in the ./images directory, or roll your own!
     volumes:
       - ../awesome-service-repo-name:/usr/app:delegated
     env_file:
-      - ./.config/awesome-service-repo-name/.env # An optional step, if the env file is needed.
+      - .config/awesome-service-repo-name/.env # An optional step, if the env file is needed.
     working_dir: /usr/app
     ports:
       - "1337:1337"
@@ -82,7 +82,7 @@ Each database can be accessed locally using the below host and ports. For each c
 
 | Service                 | Host + port                                    |
 | :---------------------- | :--------------------------------------------- |
-| `valkyrie`              | [http://localhost:3011](http://localhost:3011) |
+| `valkyrie`              | [http://localhost:3021](http://localhost:3021) |
 
 **NOTE:** When adding a new service database, ensure you don't use a conflicting port in the `docker-compose.yml` configuration.
 
