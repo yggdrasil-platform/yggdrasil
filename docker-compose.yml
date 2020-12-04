@@ -2,18 +2,32 @@ version: '3.5'
 
 services:
   # Services.
+  heimdallr:
+    container_name: heimdallr
+    image: yggdrasil/heimdallr
+    build:
+      context: images/node14.15.1-alpine
+    volumes:
+      - ../heimdallr:/usr/app:delegated
+    env_file:
+      - .config/heimdallr/.env
+    working_dir: /usr/app
+    ports:
+      - "3010:3000"
+    command: yarn start
+
   valkyrie:
     container_name: valkyrie
     image: yggdrasil/valkyrie
     build:
-      context: ./images/node12.6.0-alpine
+      context: images/node14.15.1-alpine
     volumes:
       - ../valkyrie:/usr/app:delegated
     env_file:
-      - ./.config/valkyrie/.env
+      - .config/valkyrie/.env
     working_dir: /usr/app
     ports:
-    - "3010:3010"
+    - "3020:3000"
     command: yarn start
     depends_on:
       - valkyrie_db
@@ -23,9 +37,9 @@ services:
     container_name: valkyrie_db
     image: yggdrasil/valkyrie_db
     build:
-      context: ./images/postgres12-alpine
+      context: images/postgres12-alpine
     environment:
       POSTGRES_PASSWORD: password
       POSTGRES_USER: admin
     ports:
-      - "3011:5432"
+      - "3021:5432"
