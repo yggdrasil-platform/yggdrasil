@@ -1,2 +1,3 @@
 -- Create databases.
-CREATE DATABASE development;
+CREATE DATABASE heimdallr;
+CREATE DATABASE valkyrie;

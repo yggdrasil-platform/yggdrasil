@@ -12,9 +12,15 @@ services:
     env_file:
       - .config/heimdallr/.env
     working_dir: /usr/app
+    networks:
+      - yggdrasil
+      - midgard
     ports:
-      - "3010:3000"
+      - "3000:3000"
     command: yarn start
+    depends_on:
+      - valhalla
+      - valkyrie
 
   valkyrie:
     container_name: valkyrie
@@ -26,20 +32,32 @@ services:
     env_file:
       - .config/valkyrie/.env
     working_dir: /usr/app
+    networks:
+      - yggdrasil
     ports:
-    - "3020:3000"
+    - "3000:3000"
     command: yarn start
     depends_on:
-      - valkyrie_db
+      - valhalla
 
   # Databases.
-  valkyrie_db:
-    container_name: valkyrie_db
-    image: yggdrasil/valkyrie_db
+  valhalla:
+    container_name: valhalla
+    image: yggdrasil/valhalla
     build:
       context: images/postgres12-alpine
     environment:
       POSTGRES_PASSWORD: password
       POSTGRES_USER: admin
+    networks:
+      - yggdrasil
+      - midgard
     ports:
-      - "3021:5432"
+      - "5432:5432"
+
+networks:
+  yggdrasil:
+    internal: true
+    name: yggdrasil
+  midgard:
+    name: midgard
