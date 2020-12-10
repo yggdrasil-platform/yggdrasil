@@ -1,6 +1,6 @@
-# Local Yggdrasil Platform
+# Yggdrasil
 
-Runs the local Yggdrasil platform using Docker Compose.
+Runs the Yggdrasil platform using Docker Compose.
 
 #### Table of contents
 
@@ -9,7 +9,6 @@ Runs the local Yggdrasil platform using Docker Compose.
 - [Misc](#misc)
   - [Updating dependencies](#updating-dependencies)
   - [Adding a new service](#adding-a-new-service)
-  - [Database access](#database-access)
 
 ## Prerequisites
 
@@ -73,16 +72,3 @@ awesome-service:
     depends_on:
       - awesome_service_db
 ```
-
-### Database access
-
-Each database can be accessed locally using the below host and ports. For each connection use the following credentials:
-- Username: `admin`
-- Password: `password`
-
-| Service                 | Host + port                                    |
-| :---------------------- | :--------------------------------------------- |
-| `valkyrie`              | [http://localhost:3021](http://localhost:3021) |
-
-**NOTE:** When adding a new service database, ensure you don't use a conflicting port in the `docker-compose.yml` configuration.
-
