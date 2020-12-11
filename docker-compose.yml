@@ -14,13 +14,34 @@ services:
     working_dir: /usr/app
     networks:
       - yggdrasil
-      - midgard
+      - bifrost
     ports:
       - "3000:3000"
     command: yarn start
     depends_on:
       - valhalla
+      - mimir
       - valkyrie
+
+  mimir:
+    container_name: mimir
+    image: yggdrasil/mimir
+    build:
+      context: images/golang1.14.2-alpine
+    volumes:
+      - ../mimir:/usr/app:delegated
+    env_file:
+      - .config/mimir/.env
+    working_dir: /usr/app
+    networks:
+      - yggdrasil
+      - bifrost
+    ports:
+      - "3000:3000"
+    entrypoint: ["/bin/sh", "./scripts/start.sh"]
+    depends_on:
+      - mimisbrunnr
+      - valhalla
 
   valkyrie:
     container_name: valkyrie
@@ -51,13 +72,24 @@ services:
       POSTGRES_USER: admin
     networks:
       - yggdrasil
-      - midgard
+      - bifrost
     ports:
       - "5432:5432"
+
+  mimisbrunnr:
+    container_name: mimisbrunnr
+    image: yggdrasil/mimisbrunnr
+    build:
+      context: images/redis6.0.9-alpine
+    networks:
+      - yggdrasil
+      - bifrost
+    ports:
+      - "6379:6379"
 
 networks:
   yggdrasil:
     internal: true
     name: yggdrasil
-  midgard:
-    name: midgard
+  bifrost:
+    name: bifrost

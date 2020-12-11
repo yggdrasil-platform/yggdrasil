@@ -4,6 +4,10 @@
     "source_url": "git@github.com:kieranroneill/heimdallr.git"
   },
   {
+    "name": "mimir",
+    "source_url": "git@github.com:kieranroneill/mimir.git"
+  },
+  {
     "name": "valkyrie",
     "source_url": "git@github.com:kieranroneill/valkyrie.git"
   }
