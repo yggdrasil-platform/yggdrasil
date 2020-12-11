@@ -24,7 +24,8 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
       - name: "Install 🚧"
-        run: yarn install
+        run: |
+          yarn add semantic-release @semantic-release/{changelog,commit-analyzer,exec,git,github,release-notes-generator}
       - name: "Release 🔖"
         env:
           GITHUB_TOKEN: ${{ secrets.PAT_RELEASE }}

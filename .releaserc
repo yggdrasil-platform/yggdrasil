@@ -4,14 +4,17 @@
     "@semantic-release/commit-analyzer",
     "@semantic-release/release-notes-generator",
     "@semantic-release/changelog",
-    "@semantic-release/npm",
+    ["@semantic-release/exec", {
+      "publishCmd": "./scripts/version.sh ${nextRelease.version}"
+    }],
     [
       "@semantic-release/git",
       {
-        "assets": ["package.json", "yarn.lock", "CHANGELOG.md"],
+        "assets": ["CHANGELOG.md", "VERSION"],
         "message": "chore(release): ${nextRelease.version}\n\n${nextRelease.notes}"
       }
     ],
     "@semantic-release/github"
-  ]
+  ],
+  "repositoryUrl": "https://github.com/kieranroneill/yggdrasil"
 }
