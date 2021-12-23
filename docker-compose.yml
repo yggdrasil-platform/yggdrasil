@@ -1,95 +1,79 @@
 version: '3.5'
 
 services:
-  # Services.
+  dependencies:
+    build:
+      context: .
+      dockerfile: images/node/Dockerfile
+      target: dependencies
+    container_name: dependencies
+    image: yggdrasil/dependencies
+    networks:
+      - yggdrasil
+    volumes:
+      - ./node_mdules:/node_modules:delegated
+
+  # Applications
   heimdallr:
+    build:
+      args:
+        app_name: heimdallr
+      context: .
+      dockerfile: images/node/Dockerfile
+      target: application
     container_name: heimdallr
+    entrypoint: "yarn start:heimdallr"
     image: yggdrasil/heimdallr
-    build:
-      context: images/node14.15.1-alpine
-    volumes:
-      - ../heimdallr:/usr/app:delegated
-    env_file:
-      - .config/heimdallr/.env
-    working_dir: /usr/app
     networks:
       - yggdrasil
-      - bifrost
+      - midgard
     ports:
       - "3000:3000"
-    command: yarn start
-    depends_on:
-      - valhalla
-      - mimir
-      - valkyrie
-
-  mimir:
-    container_name: mimir
-    image: yggdrasil/mimir
-    build:
-      context: images/golang1.14.2-alpine
     volumes:
-      - ../mimir:/usr/app:delegated
-    env_file:
-      - .config/mimir/.env
-    working_dir: /usr/app
+      - ./node_modules:/usr/app/node_modules:delegated
+      - ./apps/heimdallr:/usr/app/apps/heimdallr:delegated
+      - ./libs:/usr/app/libs:delegated
+
+  valhalla:
+    build:
+      args:
+        app_name: valhalla
+      context: .
+      dockerfile: images/node/Dockerfile
+      target: application
+    container_name: valhalla
+    depends_on:
+      - dependencies
+    entrypoint: "yarn start:valhalla"
+    image: yggdrasil/valhalla
     networks:
       - yggdrasil
-      - bifrost
+      - midgard
     ports:
-      - "3000:3000"
-    entrypoint: ["/bin/sh", "./scripts/start.sh"]
-    depends_on:
-      - mimisbrunnr
-      - valhalla
-
-  valkyrie:
-    container_name: valkyrie
-    image: yggdrasil/valkyrie
-    build:
-      context: images/node14.15.1-alpine
+      - "3001:3001"
     volumes:
-      - ../valkyrie:/usr/app:delegated
-    env_file:
-      - .config/valkyrie/.env
-    working_dir: /usr/app
-    networks:
-      - yggdrasil
-    ports:
-    - "3000:3000"
-    command: yarn start
-    depends_on:
-      - valhalla
+      - ./node_modules:/usr/app/node_modules:delegated
+      - ./apps/valhalla:/usr/app/apps/valhalla:delegated
+      - ./libs:/usr/app/libs:delegated
 
   # Databases.
-  valhalla:
-    container_name: valhalla
-    image: yggdrasil/valhalla
-    build:
-      context: images/postgres12-alpine
-    environment:
-      POSTGRES_PASSWORD: password
-      POSTGRES_USER: admin
-    networks:
-      - yggdrasil
-      - bifrost
-    ports:
-      - "5432:5432"
-
-  mimisbrunnr:
-    container_name: mimisbrunnr
-    image: yggdrasil/mimisbrunnr
-    build:
-      context: images/redis6.0.9-alpine
-    networks:
-      - yggdrasil
-      - bifrost
-    ports:
-      - "6379:6379"
+#  valhalla:
+#    container_name: valhalla
+#    image: yggdrasil/valhalla
+#    build:
+#      context: images/postgres12-alpine
+#    environment:
+#      POSTGRES_PASSWORD: password
+#      POSTGRES_USER: admin
+#    networks:
+#      - yggdrasil
+#      - midgard
+#    ports:
+#      - "5432:5432"
 
 networks:
   yggdrasil:
     internal: true
     name: yggdrasil
-  bifrost:
-    name: bifrost
+  midgard:
+    name: midgard

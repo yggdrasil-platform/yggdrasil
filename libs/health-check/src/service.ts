@@ -10,7 +10,7 @@ export default class HealthCheckService {
   async get(): Promise<Healthcheck> {
     return {
       environment: process.env.NODE_ENV || null,
-      name: process.env.SERVICE_NAME || null,
+      name: process.env.APP_NAME || null,
       version: process.env.VERSION || null,
     };
   }
