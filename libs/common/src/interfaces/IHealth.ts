@@ -1,7 +1,7 @@
-interface HealthCheck {
+interface IHealth {
   environment: string | null;
   name: string | null;
   version: string | null;
 }
 
-export default HealthCheck;
+export default IHealth;

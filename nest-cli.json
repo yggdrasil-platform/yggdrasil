@@ -4,8 +4,10 @@
   "monorepo": true,
   "root": "apps/heimdallr",
   "compilerOptions": {
-    "webpack": false,
-    "tsConfigPath": "tsconfig.json"
+    "assets": ["**/*.proto"],
+    "tsConfigPath": "tsconfig.json",
+    "watchAssets": true,
+    "webpack": false
   },
   "projects": {
     "common": {
@@ -17,13 +19,13 @@
         "tsConfigPath": "libs/common/tsconfig.json"
       }
     },
-    "health-check": {
+    "health": {
       "type": "library",
-      "root": "libs/health-check",
+      "root": "libs/health",
       "entryFile": "index",
-      "sourceRoot": "libs/health-check/src",
+      "sourceRoot": "libs/health/src",
       "compilerOptions": {
-        "tsConfigPath": "libs/health-check/tsconfig.json"
+        "tsConfigPath": "libs/health/tsconfig.json"
       }
     },
     "heimdallr": {

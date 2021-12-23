@@ -8,8 +8,8 @@ import { join } from 'path';
 import { IEnvironmentVariables } from '@app/common/interfaces';
 
 // Modules
-import { HealthCheckModule } from '@app/health-check';
-import { UserModule } from './user';
+import { HealthModule } from './health';
+import { UsersModule } from './user';
 
 @Module({
   imports: [
@@ -24,6 +24,8 @@ import { UserModule } from './user';
         NODE_ENV: Joi.string().required(),
         PORT: Joi.number().default(3000),
         VERSION: Joi.string().required(),
+        USER_SERVICE_HOST: Joi.string().required(),
+        USER_SERVICE_PORT: Joi.number().required(),
       }),
     }),
     GraphQLModule.forRootAsync({
@@ -40,9 +42,9 @@ import { UserModule } from './user';
         sortSchema: true,
       }),
     }),
-    HealthCheckModule,
+    HealthModule,
     Logger,
-    UserModule,
+    UsersModule,
   ],
 })
 export default class AppModule {}

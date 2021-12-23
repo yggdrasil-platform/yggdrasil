@@ -1,10 +1,7 @@
 import { Field, ObjectType } from '@nestjs/graphql';
 
-// Interfaces
-import { IUser } from '@app/common/interfaces';
-
 @ObjectType()
-export default class User implements IUser {
+export default class User {
   @Field({
     description: `The user's first name`,
   })

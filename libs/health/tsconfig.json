@@ -3,7 +3,7 @@
   "compilerOptions": {
     "declaration": true,
     "lib": ["ES6"],
-    "outDir": "../../dist/libs/health-check"
+    "outDir": "../../dist/libs/health"
   },
   "include": ["src/**/*"],
   "exclude": ["node_modules", "**/*.test.ts"]

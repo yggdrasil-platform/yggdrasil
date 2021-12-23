@@ -16,8 +16,8 @@
     "paths": {
       "@app/common": ["libs/common/src"],
       "@app/common/*": ["libs/common/src/*"],
-      "@app/health-check": ["libs/health-check/src"],
-      "@app/health-check/*": ["libs/health-check/src/*"]
+      "@app/health": ["libs/health/src"],
+      "@app/health/*": ["libs/health/src/*"]
     },
     "sourceMap": true,
     "removeComments": true,

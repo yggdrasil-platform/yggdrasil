@@ -1,12 +1,15 @@
 import { Module } from '@nestjs/common';
+import { ConfigModule } from '@nestjs/config';
 
 // Providers
-import UserService from './service';
+import { UserClientProvider } from '@app/common/providers';
+import UsersService from './service';
 
 // Resolvers
-import UserResolver from './resolver';
+import UsersResolver from './resolver';
 
 @Module({
-  providers: [UserResolver, UserService],
+  imports: [ConfigModule],
+  providers: [UserClientProvider, UsersResolver, UsersService],
 })
-export default class UserModule {}
+export default class UsersModule {}

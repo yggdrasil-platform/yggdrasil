@@ -1,18 +1,6 @@
 version: '3.5'
 
 services:
-  dependencies:
-    build:
-      context: .
-      dockerfile: images/node/Dockerfile
-      target: dependencies
-    container_name: dependencies
-    image: yggdrasil/dependencies
-    networks:
-      - yggdrasil
-    volumes:
-      - ./node_mdules:/node_modules:delegated
-
   # Applications
   heimdallr:
     build:
@@ -22,6 +10,8 @@ services:
       dockerfile: images/node/Dockerfile
       target: application
     container_name: heimdallr
+    depends_on:
+      - valhalla
     entrypoint: "yarn start:heimdallr"
     image: yggdrasil/heimdallr
     networks:
@@ -42,15 +32,12 @@ services:
       dockerfile: images/node/Dockerfile
       target: application
     container_name: valhalla
-    depends_on:
-      - dependencies
     entrypoint: "yarn start:valhalla"
     image: yggdrasil/valhalla
     networks:
       - yggdrasil
-      - midgard
     ports:
-      - "3001:3001"
+      - "3000"
     volumes:
       - ./node_modules:/usr/app/node_modules:delegated
       - ./apps/valhalla:/usr/app/apps/valhalla:delegated

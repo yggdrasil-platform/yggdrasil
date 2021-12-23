@@ -3,7 +3,8 @@ import { ConfigModule } from '@nestjs/config';
 import * as Joi from 'joi';
 
 // Modules
-import { HealthCheckModule } from '@app/health-check';
+import { HealthModule } from '@app/health';
+import { UsersModule } from './user';
 
 @Module({
   imports: [
@@ -16,12 +17,15 @@ import { HealthCheckModule } from '@app/health-check';
         APP_NAME: Joi.string().default('valhalla'),
         LOG_LEVEL: Joi.string(),
         NODE_ENV: Joi.string().required(),
-        PORT: Joi.number().default(3001),
+        PORT: Joi.number().default(3000),
         VERSION: Joi.string().required(),
+        USER_SERVICE_HOST: Joi.string().required(),
+        USER_SERVICE_PORT: Joi.number().required(),
       }),
     }),
-    HealthCheckModule,
+    HealthModule,
     Logger,
+    UsersModule,
   ],
 })
 export default class AppModule {}
