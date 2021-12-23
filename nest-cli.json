@@ -1,0 +1,39 @@
+{
+  "collection": "@nestjs/schematics",
+  "sourceRoot": "apps/heimdallr/src",
+  "monorepo": true,
+  "root": "apps/heimdallr",
+  "compilerOptions": {
+    "webpack": false,
+    "tsConfigPath": "tsconfig.json"
+  },
+  "projects": {
+    "common": {
+      "type": "library",
+      "root": "libs/common",
+      "entryFile": "index",
+      "sourceRoot": "libs/common/src",
+      "compilerOptions": {
+        "tsConfigPath": "libs/common/tsconfig.json"
+      }
+    },
+    "health-check": {
+      "type": "library",
+      "root": "libs/health-check",
+      "entryFile": "index",
+      "sourceRoot": "libs/health-check/src",
+      "compilerOptions": {
+        "tsConfigPath": "libs/health-check/tsconfig.json"
+      }
+    },
+    "heimdallr": {
+      "type": "application",
+      "root": "apps/heimdallr",
+      "entryFile": "main",
+      "sourceRoot": "apps/heimdallr/src",
+      "compilerOptions": {
+        "tsConfigPath": "apps/heimdallr/tsconfig.json"
+      }
+    }
+  }
+}
