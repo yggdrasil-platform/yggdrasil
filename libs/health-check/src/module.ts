@@ -1,13 +1,15 @@
-import { Logger, Module } from '@nestjs/common';
-
-// Providers
-import HealthCheckService from './service';
+import { Module } from '@nestjs/common';
+import { ConfigModule } from '@nestjs/config';
 
 // Controllers
 import HealthCheckController from './controller';
 
+// Providers
+import HealthCheckService from './service';
+
 @Module({
   controllers: [HealthCheckController],
-  providers: [HealthCheckService, Logger],
+  imports: [ConfigModule],
+  providers: [HealthCheckService],
 })
 export default class HealthCheckModule {}

@@ -1,17 +1,21 @@
-import { Inject, Injectable, Logger, LoggerService } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
+import { ConfigService } from '@nestjs/config';
 
-// Interfaces
-import { Healthcheck } from './interfaces';
+// Types
+import { EnvironmentVariables } from '@app/common/types';
+import { HealthCheck } from './types';
 
 @Injectable()
 export default class HealthCheckService {
-  constructor(@Inject(Logger) private readonly logger: LoggerService) {}
+  constructor(
+    private readonly configService: ConfigService<EnvironmentVariables>
+  ) {}
 
-  async get(): Promise<Healthcheck> {
+  async get(): Promise<HealthCheck> {
     return {
-      environment: process.env.NODE_ENV || null,
-      name: process.env.APP_NAME || null,
-      version: process.env.VERSION || null,
+      environment: this.configService.get<string>('NODE_ENV') || null,
+      name: this.configService.get<string>('APP_NAME') || null,
+      version: this.configService.get<string>('VERSION') || null,
     };
   }
 }
