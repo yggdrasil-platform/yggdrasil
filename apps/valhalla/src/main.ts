@@ -6,11 +6,11 @@ import morgan from 'morgan';
 import AppModule from './app';
 
 // Utils
-import { createLoggerService } from '@app/common/utils';
+import { createLoggerService } from '@app/common';
 
 (async (): Promise<void> => {
   const logger: LoggerService = createLoggerService(
-    process.env.APP_NAME || 'heimdallr',
+    process.env.APP_NAME || 'valhalla',
     process.env.LOG_LEVEL
   );
   const app: NestApplication = await NestFactory.create(AppModule, {
@@ -26,7 +26,7 @@ import { createLoggerService } from '@app/common/utils';
       },
     })
   );
-  await app.listen(parseInt(process.env.PORT || '3000', 10));
+  await app.listen(parseInt(process.env.PORT || '3001', 10));
 
   logger.log(`Application is running on: ${await app.getUrl()}`);
 })();

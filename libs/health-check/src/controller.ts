@@ -1,7 +1,7 @@
 import { Controller, Get } from '@nestjs/common';
 
 // Enums
-import { Routes } from '@app/common';
+import { Routes } from '@app/common/enums';
 
 // Interfaces
 import { Healthcheck } from './interfaces';

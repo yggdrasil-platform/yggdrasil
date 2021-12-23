@@ -21,7 +21,8 @@
     "lint": "eslint . --ext .ts --ext .js",
     "postinstall": "husky install",
     "prettier": "prettier --config .prettierrc --write \"**/*.{js,json,ts}\"",
-    "start:heimdallr": "DOTENV_CONFIG_PATH=apps/heimdallr/.env.dev NODE_OPTIONS=\"-r dotenv/config\" VERSION=$npm_package_version nest start heimdallr"
+    "start:heimdallr": "DOTENV_CONFIG_PATH=apps/heimdallr/.env.dev NODE_OPTIONS=\"-r dotenv/config\" VERSION=$npm_package_version nest start heimdallr",
+    "start:valhalla": "DOTENV_CONFIG_PATH=apps/valhalla/.env.dev NODE_OPTIONS=\"-r dotenv/config\" VERSION=$npm_package_version nest start valhalla"
   },
   "devDependencies": {
     "@commitlint/cli": "^15.0.0",

@@ -34,6 +34,15 @@
       "compilerOptions": {
         "tsConfigPath": "apps/heimdallr/tsconfig.json"
       }
+    },
+    "valhalla": {
+      "type": "application",
+      "root": "apps/valhalla",
+      "entryFile": "main",
+      "sourceRoot": "apps/valhalla/src",
+      "compilerOptions": {
+        "tsConfigPath": "apps/valhalla/tsconfig.json"
+      }
     }
   }
 }
