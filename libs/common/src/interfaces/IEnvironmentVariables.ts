@@ -1,4 +1,4 @@
-interface EnvironmentVariables {
+interface IEnvironmentVariables {
   APP_NAME: string;
   LOG_LEVEL?: string;
   NODE_ENV: string;
@@ -6,4 +6,4 @@ interface EnvironmentVariables {
   VERSION: string;
 }
 
-export default EnvironmentVariables;
+export default IEnvironmentVariables;

@@ -13,20 +13,21 @@
     "noImplicitReturns": true,
     "noImplicitThis": true,
     "outDir": "dist",
-    "sourceMap": true,
-    "removeComments": true,
-    "strict": true,
-    "strictBindCallApply": false,
-    "strictNullChecks": true,
-    "strictPropertyInitialization": false,
-    "suppressImplicitAnyIndexErrors": true,
-    "target": "ES6",
     "paths": {
       "@app/common": ["libs/common/src"],
       "@app/common/*": ["libs/common/src/*"],
       "@app/health-check": ["libs/health-check/src"],
       "@app/health-check/*": ["libs/health-check/src/*"]
-    }
+    },
+    "sourceMap": true,
+    "removeComments": true,
+    "skipLibCheck": true,
+    "strict": true,
+    "strictBindCallApply": false,
+    "strictNullChecks": true,
+    "strictPropertyInitialization": false,
+    "suppressImplicitAnyIndexErrors": true,
+    "target": "ES6"
   },
   "exclude": ["dist", "node_modules", "**/*.test.ts"]
 }

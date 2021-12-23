@@ -9,7 +9,7 @@ import HealthCheckService from './service';
 // Types
 import { HealthCheck } from './types';
 
-@Controller(Routes.HealthCheck)
+@Controller(Routes.Health)
 export default class HealthCheckController {
   constructor(private readonly healthCheckService: HealthCheckService) {}
 

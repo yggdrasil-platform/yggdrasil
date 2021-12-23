@@ -2,13 +2,13 @@ import { Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 
 // Types
-import { EnvironmentVariables } from '@app/common/types';
+import { IEnvironmentVariables } from '@app/common/interfaces';
 import { HealthCheck } from './types';
 
 @Injectable()
 export default class HealthCheckService {
   constructor(
-    private readonly configService: ConfigService<EnvironmentVariables>
+    private readonly configService: ConfigService<IEnvironmentVariables>
   ) {}
 
   async get(): Promise<HealthCheck> {

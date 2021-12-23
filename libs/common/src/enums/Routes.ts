@@ -1,5 +1,5 @@
 enum Routes {
-  HealthCheck = '/health-check',
+  Health = '/health',
 }
 
 export default Routes;
