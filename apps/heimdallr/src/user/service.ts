@@ -5,6 +5,9 @@ import { firstValueFrom } from 'rxjs';
 // Enums
 import { Providers, UserMessagePatterns } from '@app/common/enums';
 
+// Inputs
+import { CreateUserInput } from '@app/common/inputs';
+
 // Models
 import { User } from '@app/common/models';
 
@@ -12,12 +15,29 @@ import { User } from '@app/common/models';
 export default class UsersService {
   constructor(@Inject(Providers.User) private userClient: ClientProxy) {}
 
-  async findById(id: string): Promise<User | null> {
+  public async create(input: CreateUserInput): Promise<User> {
     return await firstValueFrom(
-      this.userClient.send<User | null, string>(
-        UserMessagePatterns.FindById,
-        id
+      this.userClient.send<User, CreateUserInput>(
+        UserMessagePatterns.Create,
+        input
       )
     );
+  }
+
+  public async findById(id: number): Promise<User | null> {
+    let user: User | undefined;
+
+    try {
+      user = await firstValueFrom(
+        this.userClient.send<User | undefined, number>(
+          UserMessagePatterns.FindById,
+          id
+        )
+      );
+    } catch (error) {
+      return null;
+    }
+
+    return user || null;
   }
 }

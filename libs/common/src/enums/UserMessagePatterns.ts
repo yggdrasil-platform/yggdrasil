@@ -1,4 +1,5 @@
 enum UserMessagePattern {
+  Create = 'Create',
   FindById = 'FindById',
 }
 

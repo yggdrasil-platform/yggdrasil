@@ -1,10 +1,11 @@
+import 'reflect-metadata';
 import { LoggerService } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { NestApplication, NestFactory } from '@nestjs/core';
 import { MicroserviceOptions, Transport } from '@nestjs/microservices';
 
 // Interfaces
-import { IEnvironmentVariables } from '@app/common/interfaces';
+import { IUserServiceEnvironmentVariables } from './common/interfaces';
 
 // Modules
 import AppModule from './app';
@@ -14,7 +15,7 @@ import { createLoggerService } from '@app/common/utils';
 
 (async (): Promise<void> => {
   const app: NestApplication = await NestFactory.create(AppModule);
-  const configService: ConfigService<IEnvironmentVariables, true> =
+  const configService: ConfigService<IUserServiceEnvironmentVariables, true> =
     app.get(ConfigService);
   const logger: LoggerService = createLoggerService(
     configService.get<string>('APP_NAME'),
@@ -30,5 +31,5 @@ import { createLoggerService } from '@app/common/utils';
   });
   app.useLogger(logger);
 
-  await app.startAllMicroservicesAsync();
+  await app.startAllMicroservices();
 })();

@@ -32,6 +32,8 @@ services:
       dockerfile: images/node/Dockerfile
       target: application
     container_name: valhalla
+    depends_on:
+      - valhalla_db
     entrypoint: "yarn start:valhalla"
     image: yggdrasil/valhalla
     networks:
@@ -43,20 +45,19 @@ services:
       - ./apps/valhalla:/usr/app/apps/valhalla:delegated
       - ./libs:/usr/app/libs:delegated
 
-  # Databases.
-#  valhalla:
-#    container_name: valhalla
-#    image: yggdrasil/valhalla
-#    build:
-#      context: images/postgres12-alpine
-#    environment:
-#      POSTGRES_PASSWORD: password
-#      POSTGRES_USER: admin
-#    networks:
-#      - yggdrasil
-#      - midgard
-#    ports:
-#      - "5432:5432"
+  # Databases
+  valhalla_db:
+    container_name: valhalla_db
+    image: postgres:12-alpine
+    environment:
+      POSTGRES_DB: valhalla
+      POSTGRES_PASSWORD: password
+      POSTGRES_USER: admin
+    networks:
+      - yggdrasil
+      - midgard
+    ports:
+      - "5433:5432"
 
 networks:
   yggdrasil:

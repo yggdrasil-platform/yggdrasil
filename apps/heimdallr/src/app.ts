@@ -18,7 +18,7 @@ import { UsersModule } from './user';
       validationOptions: {
         abortEarly: true,
       },
-      validationSchema: Joi.object({
+      validationSchema: Joi.object<IEnvironmentVariables, true>({
         APP_NAME: Joi.string().default('heimdallr'),
         LOG_LEVEL: Joi.string(),
         NODE_ENV: Joi.string().required(),
