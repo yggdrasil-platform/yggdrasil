@@ -8,11 +8,13 @@ import { join } from 'path';
 import { IEnvironmentVariables } from './common/interfaces';
 
 // Modules
+import { AuthenticationsModule } from './authentication';
 import { HealthModule } from './health';
 import { UsersModule } from './user';
 
 @Module({
   imports: [
+    AuthenticationsModule,
     ConfigModule.forRoot({
       ignoreEnvFile: true,
       validationOptions: {

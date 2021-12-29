@@ -11,7 +11,7 @@ import { IHealth } from '@app/common/interfaces';
 @Injectable()
 export default class HealthService {
   constructor(
-    @Inject(Providers.Auth) private authClient: ClientProxy,
+    @Inject(Providers.Authentication) private authClient: ClientProxy,
     @Inject(Providers.User) private userClient: ClientProxy
   ) {}
 

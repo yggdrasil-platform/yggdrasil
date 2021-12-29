@@ -6,7 +6,7 @@ import { firstValueFrom } from 'rxjs';
 import { Providers, UserMessagePatterns } from '@app/common/enums';
 
 // Inputs
-import { CreateUserInput } from '@app/common/inputs';
+import { CreateUserInput } from './inputs';
 
 // Models
 import { User } from '@app/common/models';
@@ -32,6 +32,23 @@ export default class UsersService {
         this.userClient.send<User | undefined, number>(
           UserMessagePatterns.FindById,
           id
+        )
+      );
+    } catch (error) {
+      return null;
+    }
+
+    return user || null;
+  }
+
+  public async findByUsername(username: string): Promise<User | null> {
+    let user: User | undefined;
+
+    try {
+      user = await firstValueFrom(
+        this.userClient.send<User | undefined, string>(
+          UserMessagePatterns.FindByUsername,
+          username
         )
       );
     } catch (error) {

@@ -1,5 +1,5 @@
 enum Providers {
-  Auth = 'Auth',
+  Authentication = 'Authentication',
   User = 'User',
 }
 

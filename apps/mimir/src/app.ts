@@ -1,16 +1,22 @@
 import { Module } from '@nestjs/common';
-import { ConfigModule } from '@nestjs/config';
+import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TerminusModule } from '@nestjs/terminus';
+import { TypeOrmModule, TypeOrmModuleOptions } from '@nestjs/typeorm';
 import * as Joi from 'joi';
 
 // Interfaces
 import { IEnvironmentVariables } from './common/interfaces';
 
+// Models
+import { Authentication } from './common/models';
+
 // Modules
 import { HealthModule } from '@app/health';
+import { AuthenticationsModule } from './authentication';
 
 @Module({
   imports: [
+    AuthenticationsModule,
     ConfigModule.forRoot({
       ignoreEnvFile: true,
       validationOptions: {
@@ -20,6 +26,11 @@ import { HealthModule } from '@app/health';
         APP_NAME: Joi.string().default('mimir'),
         AUTH_SERVICE_HOST: Joi.string().required(),
         AUTH_SERVICE_PORT: Joi.number().required(),
+        DB_HOST: Joi.string().required(),
+        DB_NAME: Joi.string().required(),
+        DB_PASSWORD: Joi.string().required(),
+        DB_PORT: Joi.number().default(5432),
+        DB_USER: Joi.string().required(),
         LOG_LEVEL: Joi.string(),
         NODE_ENV: Joi.string().required(),
         PORT: Joi.number().default(3000),
@@ -30,6 +41,22 @@ import { HealthModule } from '@app/health';
     }),
     HealthModule,
     TerminusModule,
+    TypeOrmModule.forRootAsync({
+      imports: [ConfigModule],
+      inject: [ConfigService],
+      useFactory: (
+        configService: ConfigService<IEnvironmentVariables, true>
+      ): TypeOrmModuleOptions => ({
+        type: 'postgres',
+        host: configService.get<string>('DB_HOST'),
+        port: configService.get<number>('DB_PORT'),
+        username: configService.get<string>('DB_USER'),
+        password: configService.get<string>('DB_PASSWORD'),
+        database: configService.get<string>('DB_NAME'),
+        entities: [Authentication],
+        synchronize: true, // TODO: remove from production
+      }),
+    }),
   ],
 })
 export default class AppModule {}

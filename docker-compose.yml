@@ -33,6 +33,8 @@ services:
       dockerfile: images/node/Dockerfile
       target: application
     container_name: mimir
+    depends_on:
+      - db
     entrypoint: "yarn start:mimir"
     image: yggdrasil/mimir
     networks:
