@@ -12,17 +12,17 @@ import { Providers } from '../enums';
 // Interfaces
 import { IBaseEnvironmentVariables } from '../interfaces';
 
-const UserClientProvider: FactoryProvider<ClientProxy> = {
+const AuthClientProvider: FactoryProvider<ClientProxy> = {
   inject: [ConfigService],
-  provide: Providers.User,
+  provide: Providers.Auth,
   useFactory: (configService: ConfigService<IBaseEnvironmentVariables, true>) =>
     ClientProxyFactory.create({
       options: {
-        host: configService.get<string>('USER_SERVICE_HOST'),
-        port: configService.get<number>('USER_SERVICE_PORT'),
+        host: configService.get<string>('AUTH_SERVICE_HOST'),
+        port: configService.get<number>('AUTH_SERVICE_PORT'),
       },
       transport: Transport.TCP,
     }),
 };
 
-export default UserClientProvider;
+export default AuthClientProvider;

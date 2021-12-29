@@ -1,7 +1,8 @@
+import 'reflect-metadata';
 import { LoggerService } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { NestApplication, NestFactory } from '@nestjs/core';
-import morgan from 'morgan';
+import { MicroserviceOptions, Transport } from '@nestjs/microservices';
 
 // Interfaces
 import { IEnvironmentVariables } from './common/interfaces';
@@ -21,17 +22,14 @@ import { createLoggerService } from '@app/common/utils';
     configService.get<string>('LOG_LEVEL')
   );
 
+  app.connectMicroservice<MicroserviceOptions>({
+    transport: Transport.TCP,
+    options: {
+      host: configService.get<string>('AUTH_SERVICE_HOST'),
+      port: configService.get<number>('AUTH_SERVICE_PORT'),
+    },
+  });
   app.useLogger(logger);
-  app.use(
-    morgan('combined', {
-      stream: {
-        write: (message: string) => {
-          logger.log(message);
-        },
-      },
-    })
-  );
-  await app.listen(configService.get<number>('PORT'));
 
-  logger.log(`Application is running on: ${await app.getUrl()}`);
+  await app.startAllMicroservices();
 })();

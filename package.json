@@ -22,6 +22,7 @@
     "postinstall": "husky install",
     "prettier": "prettier --config .prettierrc --write \"**/*.{js,json,ts}\"",
     "start:heimdallr": "DOTENV_CONFIG_PATH=apps/heimdallr/.env.dev NODE_OPTIONS=\"-r dotenv/config\" VERSION=$npm_package_version nest start heimdallr --watch",
+    "start:mimir": "DOTENV_CONFIG_PATH=apps/mimir/.env.dev NODE_OPTIONS=\"-r dotenv/config\" VERSION=$npm_package_version nest start mimir --watch",
     "start:valhalla": "DOTENV_CONFIG_PATH=apps/valhalla/.env.dev NODE_OPTIONS=\"-r dotenv/config\" VERSION=$npm_package_version nest start valhalla --watch"
   },
   "devDependencies": {
@@ -48,6 +49,7 @@
     "@nestjs/graphql": "^9.1.2",
     "@nestjs/microservices": "^8.2.4",
     "@nestjs/platform-express": "^8.2.4",
+    "@nestjs/terminus": "^8.0.3",
     "@nestjs/typeorm": "^8.0.2",
     "apollo-server-express": "^3.5.0",
     "class-validator": "^0.13.2",

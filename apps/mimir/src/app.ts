@@ -1,15 +1,13 @@
 import { Module } from '@nestjs/common';
-import { ConfigModule, ConfigService } from '@nestjs/config';
-import { GqlModuleOptions, GraphQLModule } from '@nestjs/graphql';
+import { ConfigModule } from '@nestjs/config';
+import { TerminusModule } from '@nestjs/terminus';
 import * as Joi from 'joi';
-import { join } from 'path';
 
 // Interfaces
 import { IEnvironmentVariables } from './common/interfaces';
 
 // Modules
-import { HealthModule } from './health';
-import { UsersModule } from './user';
+import { HealthModule } from '@app/health';
 
 @Module({
   imports: [
@@ -19,7 +17,7 @@ import { UsersModule } from './user';
         abortEarly: true,
       },
       validationSchema: Joi.object<IEnvironmentVariables, true>({
-        APP_NAME: Joi.string().default('heimdallr'),
+        APP_NAME: Joi.string().default('mimir'),
         AUTH_SERVICE_HOST: Joi.string().required(),
         AUTH_SERVICE_PORT: Joi.number().required(),
         LOG_LEVEL: Joi.string(),
@@ -30,22 +28,8 @@ import { UsersModule } from './user';
         USER_SERVICE_PORT: Joi.number().required(),
       }),
     }),
-    GraphQLModule.forRootAsync({
-      imports: [ConfigModule],
-      inject: [ConfigService],
-      useFactory: (
-        configService: ConfigService<IEnvironmentVariables, true>
-      ): GqlModuleOptions => ({
-        autoSchemaFile:
-          configService.get<string>('NODE_ENV') === 'test'
-            ? true
-            : join(__dirname, 'schema.gql'),
-        context: ({ req, res }) => ({ req, res }),
-        sortSchema: true,
-      }),
-    }),
     HealthModule,
-    UsersModule,
+    TerminusModule,
   ],
 })
 export default class AppModule {}

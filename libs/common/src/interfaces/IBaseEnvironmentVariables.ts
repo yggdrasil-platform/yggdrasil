@@ -1,4 +1,4 @@
-interface IEnvironmentVariables {
+interface IBaseEnvironmentVariables {
   // General
   APP_NAME: string;
   LOG_LEVEL?: string;
@@ -6,9 +6,11 @@ interface IEnvironmentVariables {
   PORT: number;
   VERSION: string;
 
-  // User service
+  // Services
+  AUTH_SERVICE_HOST: string;
+  AUTH_SERVICE_PORT: number;
   USER_SERVICE_HOST: string;
   USER_SERVICE_PORT: number;
 }
 
-export default IEnvironmentVariables;
+export default IBaseEnvironmentVariables;

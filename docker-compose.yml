@@ -11,6 +11,7 @@ services:
       target: application
     container_name: heimdallr
     depends_on:
+      - mimir
       - valhalla
     entrypoint: "yarn start:heimdallr"
     image: yggdrasil/heimdallr
@@ -24,6 +25,25 @@ services:
       - ./apps/heimdallr:/usr/app/apps/heimdallr:delegated
       - ./libs:/usr/app/libs:delegated
 
+  mimir:
+    build:
+      args:
+        app_name: mimir
+      context: .
+      dockerfile: images/node/Dockerfile
+      target: application
+    container_name: mimir
+    entrypoint: "yarn start:mimir"
+    image: yggdrasil/mimir
+    networks:
+      - yggdrasil
+    ports:
+      - "3000"
+    volumes:
+      - ./node_modules:/usr/app/node_modules:delegated
+      - ./apps/mimir:/usr/app/apps/mimir:delegated
+      - ./libs:/usr/app/libs:delegated
+
   valhalla:
     build:
       args:
@@ -33,7 +53,7 @@ services:
       target: application
     container_name: valhalla
     depends_on:
-      - valhalla_db
+      - db
     entrypoint: "yarn start:valhalla"
     image: yggdrasil/valhalla
     networks:
@@ -46,18 +66,19 @@ services:
       - ./libs:/usr/app/libs:delegated
 
   # Databases
-  valhalla_db:
-    container_name: valhalla_db
-    image: postgres:12-alpine
+  db:
+    build:
+      context: images/postgres
+    container_name: db
     environment:
-      POSTGRES_DB: valhalla
       POSTGRES_PASSWORD: password
       POSTGRES_USER: admin
+    image: yggdrasil/db
     networks:
       - yggdrasil
       - midgard
     ports:
-      - "5433:5432"
+      - "5432:5432"
 
 networks:
   yggdrasil:

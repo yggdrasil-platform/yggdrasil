@@ -1,0 +1,9 @@
+{
+  "extends": "../../tsconfig.json",
+  "compilerOptions": {
+    "declaration": false,
+    "lib": ["ES6"],
+    "outDir": "../../dist/apps/mimir"
+  },
+  "include": ["src/**/*"]
+}

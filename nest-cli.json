@@ -37,6 +37,15 @@
         "tsConfigPath": "apps/heimdallr/tsconfig.json"
       }
     },
+    "mimir": {
+      "type": "application",
+      "root": "apps/v",
+      "entryFile": "main",
+      "sourceRoot": "apps/mimir/src",
+      "compilerOptions": {
+        "tsConfigPath": "apps/mimir/tsconfig.json"
+      }
+    },
     "valhalla": {
       "type": "application",
       "root": "apps/valhalla",

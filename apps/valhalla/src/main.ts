@@ -5,7 +5,7 @@ import { NestApplication, NestFactory } from '@nestjs/core';
 import { MicroserviceOptions, Transport } from '@nestjs/microservices';
 
 // Interfaces
-import { IUserServiceEnvironmentVariables } from './common/interfaces';
+import { IEnvironmentVariables } from './common/interfaces';
 
 // Modules
 import AppModule from './app';
@@ -15,7 +15,7 @@ import { createLoggerService } from '@app/common/utils';
 
 (async (): Promise<void> => {
   const app: NestApplication = await NestFactory.create(AppModule);
-  const configService: ConfigService<IUserServiceEnvironmentVariables, true> =
+  const configService: ConfigService<IEnvironmentVariables, true> =
     app.get(ConfigService);
   const logger: LoggerService = createLoggerService(
     configService.get<string>('APP_NAME'),

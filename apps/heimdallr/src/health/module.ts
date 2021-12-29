@@ -5,12 +5,12 @@ import { ConfigModule } from '@nestjs/config';
 import HealthController from './controller';
 
 // Providers
-import { UserClientProvider } from '@app/common/providers';
+import { AuthClientProvider, UserClientProvider } from '@app/common/providers';
 import HealthService from './service';
 
 @Module({
   controllers: [HealthController],
   imports: [ConfigModule],
-  providers: [HealthService, UserClientProvider],
+  providers: [AuthClientProvider, HealthService, UserClientProvider],
 })
 export default class HealthModule {}
