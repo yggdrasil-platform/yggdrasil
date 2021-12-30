@@ -1,20 +1,24 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 
+// Controllers
+import AuthController from './controller';
+
 // Providers
 import { AuthClientProvider, UserClientProvider } from '@app/common/providers';
 import AuthService from './service';
 import UsersService from '../user/service';
 
-// Resolvers
-import AuthResolver from './resolver';
+// Strategies
+import { LocalStrategy } from './strategies';
 
 @Module({
+  controllers: [AuthController],
   imports: [ConfigModule],
   providers: [
     AuthClientProvider,
-    AuthResolver,
     AuthService,
+    LocalStrategy,
     UserClientProvider,
     UsersService,
   ],

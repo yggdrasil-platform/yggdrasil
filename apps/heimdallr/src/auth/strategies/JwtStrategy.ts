@@ -1,4 +1,4 @@
-import { Strategy } from 'passport-local';
+import { ExtractJwt, Strategy } from 'passport-jwt';
 import { PassportStrategy } from '@nestjs/passport';
 import { Injectable, UnauthorizedException } from '@nestjs/common';
 
@@ -10,15 +10,15 @@ import AuthService from '../service';
 import UsersService from '../../user/service';
 
 @Injectable()
-export default class LocalStrategy extends PassportStrategy(Strategy) {
+export default class JwtStrategy extends PassportStrategy(Strategy) {
   constructor(
     private readonly authService: AuthService,
     private readonly usersService: UsersService,
   ) {
-    super();
+    super({});
   }
 
-  public async validate(username: string, password: string): Promise<User> {
+  public async validate(username: string, password: string): Promise<any> {
     const user: User | null = await this.usersService.findByUsername(username);
     let isValid: boolean = false;
 
