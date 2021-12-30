@@ -3,22 +3,33 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 
 // Inputs
-import { AuthenticateDTO } from '@app/common/dtos';
+import {
+  CreateAuthenticationDTO,
+  ValidateAuthenticationDTO,
+} from '@app/common/dtos';
 
 // Models
-import { Authentication } from '../common/models';
+import { Authentication } from '@app/common/models';
 
 @Injectable()
-export default class UsersService {
+export default class AuthenticationsService {
   constructor(
     @InjectRepository(Authentication)
-    private readonly authenticationRepository: Repository<Authentication>
+    private readonly authenticationRepository: Repository<Authentication>,
   ) {}
 
-  public async authenticate({
+  public async create(input: CreateAuthenticationDTO): Promise<Authentication> {
+    const entity: Authentication = await this.authenticationRepository.create(
+      input,
+    );
+
+    return await this.authenticationRepository.save(entity);
+  }
+
+  public async validate({
     password,
     userId,
-  }: AuthenticateDTO): Promise<boolean> {
+  }: ValidateAuthenticationDTO): Promise<boolean> {
     const entity: Authentication | undefined =
       await this.authenticationRepository.findOne({
         where: {

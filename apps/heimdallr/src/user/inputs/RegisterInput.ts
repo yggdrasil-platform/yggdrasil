@@ -5,7 +5,7 @@ import { IsNotEmpty, MaxLength } from 'class-validator';
 import { CreateUserDTO } from '@app/common/dtos';
 
 @InputType()
-export default class CreateUserInput implements CreateUserDTO {
+export default class RegisterInput implements CreateUserDTO {
   @Field({
     description: `The user's first name`,
   })
@@ -19,4 +19,17 @@ export default class CreateUserInput implements CreateUserDTO {
   @IsNotEmpty()
   @MaxLength(255)
   lastName: string;
+
+  @Field({
+    description: `The user's password`,
+  })
+  @IsNotEmpty()
+  password: string;
+
+  @Field({
+    description: `The user's username`,
+  })
+  @IsNotEmpty()
+  @MaxLength(255)
+  username: string;
 }

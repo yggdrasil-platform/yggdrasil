@@ -12,7 +12,7 @@ import { User } from '@app/common/models';
 export default class UsersService {
   constructor(
     @InjectRepository(User)
-    private readonly userRepository: Repository<User>
+    private readonly userRepository: Repository<User>,
   ) {}
 
   public async create(input: CreateUserDTO): Promise<User> {

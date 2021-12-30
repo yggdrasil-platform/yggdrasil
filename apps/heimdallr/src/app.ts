@@ -8,13 +8,13 @@ import { join } from 'path';
 import { IEnvironmentVariables } from './common/interfaces';
 
 // Modules
-import { AuthenticationsModule } from './authentication';
+import { AuthModule } from './auth';
 import { HealthModule } from './health';
 import { UsersModule } from './user';
 
 @Module({
   imports: [
-    AuthenticationsModule,
+    AuthModule,
     ConfigModule.forRoot({
       ignoreEnvFile: true,
       validationOptions: {
@@ -27,16 +27,16 @@ import { UsersModule } from './user';
         LOG_LEVEL: Joi.string(),
         NODE_ENV: Joi.string().required(),
         PORT: Joi.number().default(3000),
-        VERSION: Joi.string().required(),
         USER_SERVICE_HOST: Joi.string().required(),
         USER_SERVICE_PORT: Joi.number().required(),
+        VERSION: Joi.string().required(),
       }),
     }),
     GraphQLModule.forRootAsync({
       imports: [ConfigModule],
       inject: [ConfigService],
       useFactory: (
-        configService: ConfigService<IEnvironmentVariables, true>
+        configService: ConfigService<IEnvironmentVariables, true>,
       ): GqlModuleOptions => ({
         autoSchemaFile:
           configService.get<string>('NODE_ENV') === 'test'

@@ -2,10 +2,16 @@ import { Controller } from '@nestjs/common';
 import { MessagePattern, Payload } from '@nestjs/microservices';
 
 // Enums
-import { AuthenticationMessagePattern } from '@app/common/enums';
+import { AuthMessagePattern } from '@app/common/enums';
 
 // Inputs
-import { AuthenticateDTO } from '@app/common/dtos';
+import {
+  CreateAuthenticationDTO,
+  ValidateAuthenticationDTO,
+} from '@app/common/dtos';
+
+// Models
+import { Authentication } from '@app/common/models';
 
 // Providers
 import AuthenticationsService from './service';
@@ -13,13 +19,20 @@ import AuthenticationsService from './service';
 @Controller()
 export default class AuthenticationController {
   constructor(
-    private readonly authenticationsService: AuthenticationsService
+    private readonly authenticationsService: AuthenticationsService,
   ) {}
 
-  @MessagePattern(AuthenticationMessagePattern.Authenticate)
-  public async authenticate(
-    @Payload() input: AuthenticateDTO
+  @MessagePattern(AuthMessagePattern.CreateAuthentication)
+  public async create(
+    @Payload() input: CreateAuthenticationDTO,
+  ): Promise<Authentication> {
+    return await this.authenticationsService.create(input);
+  }
+
+  @MessagePattern(AuthMessagePattern.ValidateAuthentication)
+  public async validate(
+    @Payload() input: ValidateAuthenticationDTO,
   ): Promise<boolean> {
-    return await this.authenticationsService.authenticate(input);
+    return await this.authenticationsService.validate(input);
   }
 }

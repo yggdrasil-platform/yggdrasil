@@ -3,20 +3,20 @@ import { ConfigModule } from '@nestjs/config';
 
 // Providers
 import { AuthClientProvider, UserClientProvider } from '@app/common/providers';
-import AuthenticationsService from './service';
-import { UsersService } from '../user';
+import AuthService from './service';
+import UsersService from '../user/service';
 
 // Resolvers
-import AuthenticationsResolver from './resolver';
+import AuthResolver from './resolver';
 
 @Module({
   imports: [ConfigModule],
   providers: [
     AuthClientProvider,
-    AuthenticationsResolver,
-    AuthenticationsService,
-    UsersService,
+    AuthResolver,
+    AuthService,
     UserClientProvider,
+    UsersService,
   ],
 })
-export default class UsersModule {}
+export default class AuthModule {}

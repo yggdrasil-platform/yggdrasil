@@ -14,7 +14,7 @@ import { IBaseEnvironmentVariables } from '../interfaces';
 
 const UserClientProvider: FactoryProvider<ClientProxy> = {
   inject: [ConfigService],
-  provide: Providers.User,
+  provide: Providers.UserClient,
   useFactory: (configService: ConfigService<IBaseEnvironmentVariables, true>) =>
     ClientProxyFactory.create({
       options: {

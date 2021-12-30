@@ -10,7 +10,7 @@ export default class HealthService {
   constructor(
     private readonly configService: ConfigService<IBaseEnvironmentVariables>,
     private readonly database: TypeOrmHealthIndicator,
-    private readonly health: HealthCheckService
+    private readonly health: HealthCheckService,
   ) {}
 
   async get(): Promise<IHealth> {

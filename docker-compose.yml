@@ -35,6 +35,7 @@ services:
     container_name: mimir
     depends_on:
       - db
+      - mimisbrunnr
     entrypoint: "yarn start:mimir"
     image: yggdrasil/mimir
     networks:
@@ -81,6 +82,17 @@ services:
       - midgard
     ports:
       - "5432:5432"
+
+  mimisbrunnr:
+    container_name: mimisbrunnr
+    build:
+      context: images/redis
+    image: yggdrasil/mimisbrunnr
+    networks:
+      - yggdrasil
+      - midgard
+    ports:
+      - "6379:6379"
 
 networks:
   yggdrasil:

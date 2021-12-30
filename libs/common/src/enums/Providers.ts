@@ -1,6 +1,7 @@
 enum Providers {
-  Authentication = 'Authentication',
-  User = 'User',
+  AuthClient = 'AuthClient',
+  RedisClient = 'RedisClient',
+  UserClient = 'UserClient',
 }
 
 export default Providers;

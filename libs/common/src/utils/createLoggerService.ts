@@ -10,7 +10,7 @@ import { transports } from 'winston';
  */
 export default function createLoggerService(
   name: string,
-  logLevel?: string
+  logLevel?: string,
 ): LoggerService {
   return WinstonModule.createLogger({
     exitOnError: false,

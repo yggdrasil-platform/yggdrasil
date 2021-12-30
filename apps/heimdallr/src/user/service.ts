@@ -2,25 +2,27 @@ import { Inject, Injectable } from '@nestjs/common';
 import { ClientProxy } from '@nestjs/microservices';
 import { firstValueFrom } from 'rxjs';
 
+// DTOs
+import { CreateUserDTO } from '@app/common/dtos';
+
 // Enums
 import { Providers, UserMessagePatterns } from '@app/common/enums';
-
-// Inputs
-import { CreateUserInput } from './inputs';
 
 // Models
 import { User } from '@app/common/models';
 
 @Injectable()
 export default class UsersService {
-  constructor(@Inject(Providers.User) private userClient: ClientProxy) {}
+  constructor(
+    @Inject(Providers.UserClient) private readonly usersClient: ClientProxy,
+  ) {}
 
-  public async create(input: CreateUserInput): Promise<User> {
+  public async create(input: CreateUserDTO): Promise<User> {
     return await firstValueFrom(
-      this.userClient.send<User, CreateUserInput>(
+      this.usersClient.send<User, CreateUserDTO>(
         UserMessagePatterns.Create,
-        input
-      )
+        input,
+      ),
     );
   }
 
@@ -29,10 +31,10 @@ export default class UsersService {
 
     try {
       user = await firstValueFrom(
-        this.userClient.send<User | undefined, number>(
+        this.usersClient.send<User | undefined, number>(
           UserMessagePatterns.FindById,
-          id
-        )
+          id,
+        ),
       );
     } catch (error) {
       return null;
@@ -46,10 +48,10 @@ export default class UsersService {
 
     try {
       user = await firstValueFrom(
-        this.userClient.send<User | undefined, string>(
+        this.usersClient.send<User | undefined, string>(
           UserMessagePatterns.FindByUsername,
-          username
-        )
+          username,
+        ),
       );
     } catch (error) {
       return null;

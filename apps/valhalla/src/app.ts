@@ -33,9 +33,9 @@ import { UsersModule } from './user';
         LOG_LEVEL: Joi.string(),
         NODE_ENV: Joi.string().required(),
         PORT: Joi.number().default(3000),
-        VERSION: Joi.string().required(),
         USER_SERVICE_HOST: Joi.string().required(),
         USER_SERVICE_PORT: Joi.number().required(),
+        VERSION: Joi.string().required(),
       }),
     }),
     HealthModule,
@@ -44,7 +44,7 @@ import { UsersModule } from './user';
       imports: [ConfigModule],
       inject: [ConfigService],
       useFactory: (
-        configService: ConfigService<IEnvironmentVariables, true>
+        configService: ConfigService<IEnvironmentVariables, true>,
       ): TypeOrmModuleOptions => ({
         type: 'postgres',
         host: configService.get<string>('DB_HOST'),

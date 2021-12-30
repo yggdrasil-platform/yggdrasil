@@ -8,11 +8,12 @@ import * as Joi from 'joi';
 import { IEnvironmentVariables } from './common/interfaces';
 
 // Models
-import { Authentication } from './common/models';
+import { Authentication } from '@app/common/models';
 
 // Modules
 import { HealthModule } from '@app/health';
 import { AuthenticationsModule } from './authentication';
+import { SessionsModule } from './session';
 
 @Module({
   imports: [
@@ -31,21 +32,26 @@ import { AuthenticationsModule } from './authentication';
         DB_PASSWORD: Joi.string().required(),
         DB_PORT: Joi.number().default(5432),
         DB_USER: Joi.string().required(),
+        JWT_SECRET_KEY: Joi.string().required(),
         LOG_LEVEL: Joi.string(),
         NODE_ENV: Joi.string().required(),
         PORT: Joi.number().default(3000),
-        VERSION: Joi.string().required(),
+        REDIS_HOST: Joi.string().required(),
+        REDIS_PASSWORD: Joi.string().required(),
+        REDIS_PORT: Joi.number().default(6379),
         USER_SERVICE_HOST: Joi.string().required(),
         USER_SERVICE_PORT: Joi.number().required(),
+        VERSION: Joi.string().required(),
       }),
     }),
     HealthModule,
+    SessionsModule,
     TerminusModule,
     TypeOrmModule.forRootAsync({
       imports: [ConfigModule],
       inject: [ConfigService],
       useFactory: (
-        configService: ConfigService<IEnvironmentVariables, true>
+        configService: ConfigService<IEnvironmentVariables, true>,
       ): TypeOrmModuleOptions => ({
         type: 'postgres',
         host: configService.get<string>('DB_HOST'),

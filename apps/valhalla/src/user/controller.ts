@@ -18,8 +18,8 @@ export default class UsersController {
   constructor(private readonly userService: UserService) {}
 
   @MessagePattern(UserMessagePatterns.Create)
-  public async create(@Payload() data: CreateUserDTO): Promise<User> {
-    return await this.userService.create(data);
+  public async create(@Payload() input: CreateUserDTO): Promise<User> {
+    return await this.userService.create(input);
   }
 
   @MessagePattern(UserMessagePatterns.FindById)
@@ -29,7 +29,7 @@ export default class UsersController {
 
   @MessagePattern(UserMessagePatterns.FindByUsername)
   public async findByUsername(
-    @Payload() username: string
+    @Payload() username: string,
   ): Promise<User | undefined> {
     return await this.userService.findByUsername(username);
   }

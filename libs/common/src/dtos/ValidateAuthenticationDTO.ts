@@ -1,6 +1,6 @@
-interface AuthenticateDTO {
+interface ValidateAuthenticationDTO {
   password: string;
   userId: number;
 }
 
-export default AuthenticateDTO;
+export default ValidateAuthenticationDTO;

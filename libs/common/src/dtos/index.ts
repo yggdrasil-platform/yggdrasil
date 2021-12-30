@@ -1,2 +1,3 @@
-export { default as AuthenticateDTO } from './AuthenticateDTO';
+export { default as CreateAuthenticationDTO } from './CreateAuthenticationDTO';
 export { default as CreateUserDTO } from './CreateUserDTO';
+export { default as ValidateAuthenticationDTO } from './ValidateAuthenticationDTO';
