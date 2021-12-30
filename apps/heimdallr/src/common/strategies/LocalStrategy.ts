@@ -1,4 +1,4 @@
-import { ExtractJwt, Strategy } from 'passport-jwt';
+import { Strategy } from 'passport-local';
 import { PassportStrategy } from '@nestjs/passport';
 import { Injectable, UnauthorizedException } from '@nestjs/common';
 
@@ -6,19 +6,19 @@ import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { User } from '@app/common';
 
 // Providers
-import AuthService from '../service';
+import AuthService from '../../auth/service';
 import UsersService from '../../user/service';
 
 @Injectable()
-export default class JwtStrategy extends PassportStrategy(Strategy) {
+export default class LocalStrategy extends PassportStrategy(Strategy) {
   constructor(
     private readonly authService: AuthService,
     private readonly usersService: UsersService,
   ) {
-    super({});
+    super();
   }
 
-  public async validate(username: string, password: string): Promise<any> {
+  public async validate(username: string, password: string): Promise<User> {
     const user: User | null = await this.usersService.findByUsername(username);
     let isValid: boolean = false;
 
@@ -26,7 +26,7 @@ export default class JwtStrategy extends PassportStrategy(Strategy) {
       throw new UnauthorizedException();
     }
 
-    isValid = await this.authService.validate({
+    isValid = await this.authService.authenticate({
       password,
       userId: user.id,
     });

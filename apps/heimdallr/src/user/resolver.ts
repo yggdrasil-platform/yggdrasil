@@ -1,43 +1,48 @@
-import { NotFoundException } from '@nestjs/common';
+import { NotFoundException, UseGuards } from '@nestjs/common';
 import { Args, Mutation, Query, Resolver } from '@nestjs/graphql';
+
+// Decorators
+import { CurrentUser } from '../common/decorators';
+
+// Guards
+import { GqlAuthGuard } from '../common/guards';
 
 // Inputs
 import { RegisterInput } from './inputs';
 
 // Models
-import { User } from '@app/common/models';
+import { Session, User } from '@app/common/models';
 
 // Providers
-import AuthenticationsService from '../auth/service';
+import AuthService from '../auth/service';
 import UsersService from './service';
 
 @Resolver(() => User)
 export default class UsersResolver {
   constructor(
-    private readonly authenticationsService: AuthenticationsService,
+    private readonly authService: AuthService,
     private readonly usersService: UsersService,
   ) {}
 
   @Mutation(() => User)
   public async register(
     @Args('input') { password, ...input }: RegisterInput,
-  ): Promise<User> {
+  ): Promise<Session> {
     const user: User = await this.usersService.create(input);
 
-    await this.authenticationsService.createAuthentication({
+    await this.authService.createAuthentication({
       password,
       userId: user.id,
     });
 
-    return user;
+    return await this.authService.createSession(user.id);
   }
 
+  @UseGuards(GqlAuthGuard)
   @Query(() => User)
-  public async me(@Args('id') id: number): Promise<User> {
-    const user: User | null = await this.usersService.findById(id);
-
+  public async me(@CurrentUser() user: User): Promise<User> {
     if (!user) {
-      throw new NotFoundException(id);
+      throw new NotFoundException();
     }
 
     return user;

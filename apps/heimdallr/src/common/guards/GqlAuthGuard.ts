@@ -10,6 +10,6 @@ export default class GqlAuthGuard extends AuthGuard('jwt') {
   public getRequest(ctx: ExecutionContext): IRequest {
     const context: GqlExecutionContext = GqlExecutionContext.create(ctx);
 
-    return context.getContext().req;
+    return context.getContext<{ req: IRequest }>().req;
   }
 }

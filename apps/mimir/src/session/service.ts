@@ -19,24 +19,8 @@ export default class SessionsService {
     private readonly redisClient: Redis,
   ) {}
 
-  public async create(userId: number): Promise<Session> {
-    const now: number = Math.round(new Date().getTime() / 1000); // now in seconds
-    const expiresIn: number = 2630000; // one month in seconds
-    const tokenType: string = 'Bearer';
-    const sessionId: number = await this.redisClient.incr('session');
-    const key: string = `session:${sessionId}`;
-    const accessToken: string = this.jwtService.sign({
-      exp: now + expiresIn,
-      gty: 'password',
-      iat: now,
-      jti: sessionId,
-      sub: userId,
-    });
-    const session: SessionDTO = {
-      access_token: accessToken,
-      expires_in: expiresIn.toString(),
-      token_type: tokenType,
-    };
+  public async create(session: SessionDTO & { id: number }): Promise<Session> {
+    const key: string = `session:${session.id}`;
 
     try {
       await Promise.all([
@@ -44,7 +28,7 @@ export default class SessionsService {
           async (value) =>
             await this.redisClient.hset(key, value, session[value]),
         ),
-        await this.redisClient.expire(key, expiresIn),
+        await this.redisClient.expire(key, parseInt(session.expires_in)),
       ]);
     } catch (error) {
       await this.redisClient.del(key);
@@ -53,10 +37,11 @@ export default class SessionsService {
     }
 
     return {
-      accessToken,
-      expiresIn,
-      id: sessionId,
-      tokenType,
+      accessToken: session.access_token,
+      expiresIn: parseInt(session.expires_in),
+      id: session.id,
+      tokenType: session.token_type,
+      userId: parseInt(session.user_id),
     };
   }
 
@@ -74,6 +59,11 @@ export default class SessionsService {
       expiresIn: parseInt(session.expires_in),
       id,
       tokenType: session.token_type,
+      userId: parseInt(session.user_id),
     };
+  }
+
+  public async incrementId(): Promise<number> {
+    return await this.redisClient.incr('session');
   }
 }

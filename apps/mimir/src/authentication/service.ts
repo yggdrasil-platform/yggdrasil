@@ -5,7 +5,7 @@ import { Repository } from 'typeorm';
 // Interfaces
 import {
   ICreateAuthenticationPayload,
-  IValidateAuthenticationPayload,
+  IAuthenticatePayload,
 } from '@app/common/interfaces';
 
 // Models
@@ -18,20 +18,10 @@ export default class AuthenticationsService {
     private readonly authenticationRepository: Repository<Authentication>,
   ) {}
 
-  public async create(
-    input: ICreateAuthenticationPayload,
-  ): Promise<Authentication> {
-    const entity: Authentication = await this.authenticationRepository.create(
-      input,
-    );
-
-    return await this.authenticationRepository.save(entity);
-  }
-
-  public async validate({
+  public async authenticate({
     password,
     userId,
-  }: IValidateAuthenticationPayload): Promise<boolean> {
+  }: IAuthenticatePayload): Promise<boolean> {
     const entity: Authentication | undefined =
       await this.authenticationRepository.findOne({
         where: {
@@ -40,5 +30,15 @@ export default class AuthenticationsService {
       });
 
     return !!(entity && entity.password === password);
+  }
+
+  public async create(
+    input: ICreateAuthenticationPayload,
+  ): Promise<Authentication> {
+    const entity: Authentication = await this.authenticationRepository.create(
+      input,
+    );
+
+    return await this.authenticationRepository.save(entity);
   }
 }

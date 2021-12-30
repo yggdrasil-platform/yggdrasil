@@ -7,8 +7,8 @@ import { AuthMessagePattern, Providers } from '@app/common/enums';
 
 // Interfaces
 import {
+  IAuthenticatePayload,
   ICreateAuthenticationPayload,
-  IValidateAuthenticationPayload,
 } from '@app/common/interfaces';
 
 // Models
@@ -20,6 +20,15 @@ export default class AuthService {
     @Inject(Providers.AuthClient)
     private readonly authClient: ClientProxy,
   ) {}
+
+  public async authenticate(input: IAuthenticatePayload): Promise<boolean> {
+    return await firstValueFrom(
+      this.authClient.send<boolean, IAuthenticatePayload>(
+        AuthMessagePattern.Authenticate,
+        input,
+      ),
+    );
+  }
 
   public async createAuthentication(
     input: ICreateAuthenticationPayload,
@@ -41,13 +50,11 @@ export default class AuthService {
     );
   }
 
-  public async validate(
-    input: IValidateAuthenticationPayload,
-  ): Promise<boolean> {
+  public async verifySession(accessToken: string): Promise<Session | null> {
     return await firstValueFrom(
-      this.authClient.send<boolean, IValidateAuthenticationPayload>(
-        AuthMessagePattern.ValidateAuthentication,
-        input,
+      this.authClient.send<Session, string>(
+        AuthMessagePattern.VerifySession,
+        accessToken,
       ),
     );
   }

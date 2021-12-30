@@ -18,4 +18,6 @@ export default class Session {
     description: 'The type of token',
   })
   tokenType: string;
+
+  userId: number;
 }

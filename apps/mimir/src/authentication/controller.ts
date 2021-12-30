@@ -6,8 +6,8 @@ import { AuthMessagePattern } from '@app/common/enums';
 
 // Interfaces
 import {
+  IAuthenticatePayload,
   ICreateAuthenticationPayload,
-  IValidateAuthenticationPayload,
 } from '@app/common/interfaces';
 
 // Models
@@ -22,17 +22,17 @@ export default class AuthenticationController {
     private readonly authenticationsService: AuthenticationsService,
   ) {}
 
+  @MessagePattern(AuthMessagePattern.Authenticate)
+  public async authenticate(
+    @Payload() input: IAuthenticatePayload,
+  ): Promise<boolean> {
+    return await this.authenticationsService.authenticate(input);
+  }
+
   @MessagePattern(AuthMessagePattern.CreateAuthentication)
   public async create(
     @Payload() input: ICreateAuthenticationPayload,
   ): Promise<Authentication> {
     return await this.authenticationsService.create(input);
-  }
-
-  @MessagePattern(AuthMessagePattern.ValidateAuthentication)
-  public async validate(
-    @Payload() input: IValidateAuthenticationPayload,
-  ): Promise<boolean> {
-    return await this.authenticationsService.validate(input);
   }
 }

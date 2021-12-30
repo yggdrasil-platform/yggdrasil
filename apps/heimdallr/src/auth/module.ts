@@ -10,7 +10,7 @@ import AuthService from './service';
 import UsersService from '../user/service';
 
 // Strategies
-import { LocalStrategy } from './strategies';
+import { LocalStrategy } from '../common/strategies';
 
 @Module({
   controllers: [AuthController],

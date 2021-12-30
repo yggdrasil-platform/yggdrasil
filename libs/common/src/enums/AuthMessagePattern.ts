@@ -1,7 +1,8 @@
 enum AuthMessagePattern {
+  Authenticate = 'Authenticate',
   CreateAuthentication = 'CreateAuthentication',
   CreateSession = 'CreateSession',
-  ValidateAuthentication = 'ValidateAuthentication',
+  VerifySession = 'VerifySession',
 }
 
 export default AuthMessagePattern;
