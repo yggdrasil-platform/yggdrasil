@@ -1,4 +1,10 @@
-import { Controller } from '@nestjs/common';
+import {
+  Controller,
+  Inject,
+  Logger,
+  LoggerService,
+  UnprocessableEntityException,
+} from '@nestjs/common';
 import { MessagePattern, Payload } from '@nestjs/microservices';
 
 // Enums
@@ -8,6 +14,7 @@ import { AuthMessagePattern } from '@app/common/enums';
 import {
   IAuthenticatePayload,
   ICreateAuthenticationPayload,
+  ITcpResponse,
 } from '@app/common/interfaces';
 
 // Models
@@ -19,20 +26,33 @@ import AuthenticationsService from './service';
 @Controller()
 export default class AuthenticationController {
   constructor(
+    @Inject(Logger) private readonly logger: LoggerService,
     private readonly authenticationsService: AuthenticationsService,
   ) {}
 
   @MessagePattern(AuthMessagePattern.Authenticate)
   public async authenticate(
     @Payload() input: IAuthenticatePayload,
-  ): Promise<boolean> {
-    return await this.authenticationsService.authenticate(input);
+  ): Promise<ITcpResponse<boolean>> {
+    try {
+      return [null, await this.authenticationsService.authenticate(input)];
+    } catch (error) {
+      this.logger.error(error);
+
+      return [null, false];
+    }
   }
 
   @MessagePattern(AuthMessagePattern.CreateAuthentication)
   public async create(
     @Payload() input: ICreateAuthenticationPayload,
-  ): Promise<Authentication> {
-    return await this.authenticationsService.create(input);
+  ): Promise<ITcpResponse<Authentication | null>> {
+    try {
+      return [null, await this.authenticationsService.create(input)];
+    } catch (error) {
+      this.logger.error(error);
+
+      return [new UnprocessableEntityException(), null];
+    }
   }
 }

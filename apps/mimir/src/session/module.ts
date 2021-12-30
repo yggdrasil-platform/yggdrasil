@@ -1,4 +1,4 @@
-import { Module } from '@nestjs/common';
+import { Module, Logger } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { JwtModule } from '@nestjs/jwt';
 
@@ -26,6 +26,6 @@ import SessionsService from './service';
       inject: [ConfigService],
     }),
   ],
-  providers: [RedisClientProvider, SessionsService],
+  providers: [Logger, RedisClientProvider, SessionsService],
 })
 export default class SessionsModule {}

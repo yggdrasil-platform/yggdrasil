@@ -1,4 +1,4 @@
-import { Module } from '@nestjs/common';
+import { Logger, Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 
 // Controllers
@@ -13,6 +13,6 @@ import AuthenticationsService from './service';
 @Module({
   controllers: [AuthenticationsController],
   imports: [TypeOrmModule.forFeature([Authentication])],
-  providers: [AuthenticationsService],
+  providers: [AuthenticationsService, Logger],
 })
 export default class AuthenticationsModule {}

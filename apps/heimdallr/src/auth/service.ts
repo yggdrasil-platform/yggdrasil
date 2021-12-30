@@ -1,6 +1,9 @@
-import { Inject, Injectable } from '@nestjs/common';
+import {
+  Inject,
+  Injectable,
+  UnprocessableEntityException,
+} from '@nestjs/common';
 import { ClientProxy } from '@nestjs/microservices';
-import { firstValueFrom } from 'rxjs';
 
 // Enums
 import { AuthMessagePattern, Providers } from '@app/common/enums';
@@ -14,6 +17,9 @@ import {
 // Models
 import { Authentication, Session } from '@app/common/models';
 
+// Utils
+import { sendRequest } from '@app/common/utils';
+
 @Injectable()
 export default class AuthService {
   constructor(
@@ -22,40 +28,47 @@ export default class AuthService {
   ) {}
 
   public async authenticate(input: IAuthenticatePayload): Promise<boolean> {
-    return await firstValueFrom(
-      this.authClient.send<boolean, IAuthenticatePayload>(
-        AuthMessagePattern.Authenticate,
-        input,
-      ),
+    return await sendRequest<IAuthenticatePayload, boolean>(
+      this.authClient,
+      AuthMessagePattern.Authenticate,
+      input,
     );
   }
 
   public async createAuthentication(
     input: ICreateAuthenticationPayload,
   ): Promise<Authentication> {
-    return await firstValueFrom(
-      this.authClient.send<Authentication, ICreateAuthenticationPayload>(
-        AuthMessagePattern.CreateAuthentication,
-        input,
-      ),
-    );
+    const authentication: Authentication | null = await sendRequest<
+      ICreateAuthenticationPayload,
+      Authentication | null
+    >(this.authClient, AuthMessagePattern.CreateAuthentication, input);
+
+    if (!authentication) {
+      throw new UnprocessableEntityException();
+    }
+
+    return authentication;
   }
 
   public async createSession(userId: number): Promise<Session> {
-    return await firstValueFrom(
-      this.authClient.send<Session, number>(
-        AuthMessagePattern.CreateSession,
-        userId,
-      ),
+    const session: Session | null = await sendRequest<number, Session | null>(
+      this.authClient,
+      AuthMessagePattern.CreateSession,
+      userId,
     );
+
+    if (!session) {
+      throw new UnprocessableEntityException();
+    }
+
+    return session;
   }
 
   public async verifySession(accessToken: string): Promise<Session | null> {
-    return await firstValueFrom(
-      this.authClient.send<Session, string>(
-        AuthMessagePattern.VerifySession,
-        accessToken,
-      ),
+    return await sendRequest<string, Session | null>(
+      this.authClient,
+      AuthMessagePattern.VerifySession,
+      accessToken,
     );
   }
 }

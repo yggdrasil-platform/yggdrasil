@@ -5,3 +5,4 @@ export { default as ICreateUserPayload } from './ICreateUserPayload';
 export { default as IDatabaseEnvironmentVariables } from './IDatabaseEnvironmentVariables';
 export { default as IHealth } from './IHealth';
 export { default as IRedisEnvironmentVariables } from './IRedisEnvironmentVariables';
+export { default as ITcpResponse } from './ITcpResponse';
