@@ -24,7 +24,7 @@ export default class UsersResolver {
     private readonly usersService: UsersService,
   ) {}
 
-  @Mutation(() => User)
+  @Mutation(() => Session)
   public async register(
     @Args('input') { password, ...input }: RegisterInput,
   ): Promise<Session> {

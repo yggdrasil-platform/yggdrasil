@@ -1,5 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
+import { compare, hash } from 'bcrypt';
 import { Repository } from 'typeorm';
 
 // Interfaces
@@ -29,15 +30,21 @@ export default class AuthenticationsService {
         },
       });
 
-    return !!(entity && entity.password === password);
+    if (!entity) {
+      return false;
+    }
+
+    return await compare(password, entity.password);
   }
 
   public async create(
     input: ICreateAuthenticationPayload,
   ): Promise<Authentication> {
-    const entity: Authentication = await this.authenticationRepository.create(
-      input,
-    );
+    const hashedPassword: string = await hash(input.password, 12);
+    const entity: Authentication = await this.authenticationRepository.create({
+      ...input,
+      password: hashedPassword,
+    });
 
     return await this.authenticationRepository.save(entity);
   }
