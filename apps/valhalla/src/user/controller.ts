@@ -1,13 +1,13 @@
 import { Controller } from '@nestjs/common';
 import { MessagePattern, Payload } from '@nestjs/microservices';
 
-// DTOs
-import { CreateUserDTO } from '@app/common/dtos';
-
 // Enums
 import { UserMessagePatterns } from '@app/common/enums';
 
 // Interfaces
+import { ICreateUserPayload } from '@app/common/interfaces';
+
+// Models
 import { User } from '@app/common/models';
 
 // Providers
@@ -18,7 +18,7 @@ export default class UsersController {
   constructor(private readonly userService: UserService) {}
 
   @MessagePattern(UserMessagePatterns.Create)
-  public async create(@Payload() input: CreateUserDTO): Promise<User> {
+  public async create(@Payload() input: ICreateUserPayload): Promise<User> {
     return await this.userService.create(input);
   }
 

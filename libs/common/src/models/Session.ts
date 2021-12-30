@@ -17,5 +17,5 @@ export default class Session {
   @Field({
     description: 'The type of token',
   })
-  tokenType: 'Bearer';
+  tokenType: string;
 }

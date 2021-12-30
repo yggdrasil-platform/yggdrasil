@@ -1,11 +1,11 @@
 import { Field, InputType } from '@nestjs/graphql';
 import { IsNotEmpty, MaxLength } from 'class-validator';
 
-// DTOs
-import { CreateUserDTO } from '@app/common/dtos';
+// Interfaces
+import { ICreateUserPayload } from '@app/common/interfaces';
 
 @InputType()
-export default class RegisterInput implements CreateUserDTO {
+export default class RegisterInput implements ICreateUserPayload {
   @Field({
     description: `The user's first name`,
   })

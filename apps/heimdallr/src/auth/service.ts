@@ -2,14 +2,14 @@ import { Inject, Injectable } from '@nestjs/common';
 import { ClientProxy } from '@nestjs/microservices';
 import { firstValueFrom } from 'rxjs';
 
-// DTOs
-import {
-  CreateAuthenticationDTO,
-  ValidateAuthenticationDTO,
-} from '@app/common/dtos';
-
 // Enums
 import { AuthMessagePattern, Providers } from '@app/common/enums';
+
+// Interfaces
+import {
+  ICreateAuthenticationPayload,
+  IValidateAuthenticationPayload,
+} from '@app/common/interfaces';
 
 // Models
 import { Authentication, Session } from '@app/common/models';
@@ -22,10 +22,10 @@ export default class AuthService {
   ) {}
 
   public async createAuthentication(
-    input: CreateAuthenticationDTO,
+    input: ICreateAuthenticationPayload,
   ): Promise<Authentication> {
     return await firstValueFrom(
-      this.authClient.send<Authentication, CreateAuthenticationDTO>(
+      this.authClient.send<Authentication, ICreateAuthenticationPayload>(
         AuthMessagePattern.CreateAuthentication,
         input,
       ),
@@ -41,9 +41,11 @@ export default class AuthService {
     );
   }
 
-  public async validate(input: ValidateAuthenticationDTO): Promise<boolean> {
+  public async validate(
+    input: IValidateAuthenticationPayload,
+  ): Promise<boolean> {
     return await firstValueFrom(
-      this.authClient.send<boolean, ValidateAuthenticationDTO>(
+      this.authClient.send<boolean, IValidateAuthenticationPayload>(
         AuthMessagePattern.ValidateAuthentication,
         input,
       ),

@@ -2,11 +2,11 @@ import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 
-// Inputs
+// Interfaces
 import {
-  CreateAuthenticationDTO,
-  ValidateAuthenticationDTO,
-} from '@app/common/dtos';
+  ICreateAuthenticationPayload,
+  IValidateAuthenticationPayload,
+} from '@app/common/interfaces';
 
 // Models
 import { Authentication } from '@app/common/models';
@@ -18,7 +18,9 @@ export default class AuthenticationsService {
     private readonly authenticationRepository: Repository<Authentication>,
   ) {}
 
-  public async create(input: CreateAuthenticationDTO): Promise<Authentication> {
+  public async create(
+    input: ICreateAuthenticationPayload,
+  ): Promise<Authentication> {
     const entity: Authentication = await this.authenticationRepository.create(
       input,
     );
@@ -29,7 +31,7 @@ export default class AuthenticationsService {
   public async validate({
     password,
     userId,
-  }: ValidateAuthenticationDTO): Promise<boolean> {
+  }: IValidateAuthenticationPayload): Promise<boolean> {
     const entity: Authentication | undefined =
       await this.authenticationRepository.findOne({
         where: {
