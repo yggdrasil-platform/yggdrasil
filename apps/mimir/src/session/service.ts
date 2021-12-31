@@ -6,7 +6,7 @@ import { Redis } from 'ioredis';
 import { SessionDTO } from './dtos';
 
 // Enums
-import { Providers } from '@app/common/enums';
+import { Providers, RedisKeys } from '@app/common/enums';
 
 // Models
 import { Session } from '@app/common/models';
@@ -20,7 +20,7 @@ export default class SessionsService {
   ) {}
 
   public async create(session: SessionDTO & { id: number }): Promise<Session> {
-    const key: string = `session:${session.id}`;
+    const key: string = `${RedisKeys.Session}:${session.id}`;
 
     try {
       await Promise.all([
@@ -47,7 +47,7 @@ export default class SessionsService {
 
   public async findById(id: number): Promise<Session | undefined> {
     const session: Record<string, string> = await this.redisClient.hgetall(
-      `session:${id}`,
+      `${RedisKeys.Session}:${id}`,
     );
 
     if (Object.keys(session).length < 1) {
@@ -64,6 +64,6 @@ export default class SessionsService {
   }
 
   public async incrementId(): Promise<number> {
-    return await this.redisClient.incr('session');
+    return await this.redisClient.incr(RedisKeys.Session);
   }
 }

@@ -2,6 +2,9 @@ import { Controller, Inject, Logger, LoggerService } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { MessagePattern, Payload } from '@nestjs/microservices';
 
+// Constants
+import { USER_JWT_EXPIRES_IN } from '@app/common/constants';
+
 // DTOs
 import { JwtDTO } from './dtos';
 
@@ -28,7 +31,7 @@ export default class SessionsController {
   private createJwt(
     userId: number,
     sessionId: number,
-    expiresIn: number = 2630000, // one month in seconds
+    expiresIn: number,
   ): string {
     const now: number = Math.round(new Date().getTime() / 1000); // now in seconds
 
@@ -45,7 +48,7 @@ export default class SessionsController {
   public async create(
     @Payload() userId: number,
   ): Promise<ITcpResponse<Session | null>> {
-    const expiresIn: number = 2630000;
+    const expiresIn: number = USER_JWT_EXPIRES_IN;
     const sessionId: number = await this.sessionsService.incrementId();
     const accessToken: string = this.createJwt(userId, sessionId, expiresIn);
 

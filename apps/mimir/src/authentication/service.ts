@@ -3,6 +3,9 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { compare, hash } from 'bcrypt';
 import { Repository } from 'typeorm';
 
+// Constants
+import { SALT_ROUNDS } from '@app/common/constants';
+
 // Interfaces
 import {
   ICreateAuthenticationPayload,
@@ -40,7 +43,7 @@ export default class AuthenticationsService {
   public async create(
     input: ICreateAuthenticationPayload,
   ): Promise<Authentication> {
-    const hashedPassword: string = await hash(input.password, 12);
+    const hashedPassword: string = await hash(input.password, SALT_ROUNDS);
     const entity: Authentication = await this.authenticationRepository.create({
       ...input,
       password: hashedPassword,
