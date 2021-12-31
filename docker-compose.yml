@@ -4,8 +4,6 @@ services:
   # Applications
   heimdallr:
     build:
-      args:
-        app_name: heimdallr
       context: .
       dockerfile: images/node/Dockerfile
       target: application
@@ -13,7 +11,9 @@ services:
     depends_on:
       - mimir
       - valhalla
-    entrypoint: "yarn start:heimdallr"
+    entrypoint: "yarn start"
+    env_file:
+      - apps/heimdallr/.env.dev
     image: yggdrasil/heimdallr
     networks:
       - yggdrasil
@@ -21,14 +21,12 @@ services:
     ports:
       - "3000:3000"
     volumes:
-      - ./node_modules:/usr/app/node_modules:delegated
-      - ./apps/heimdallr:/usr/app/apps/heimdallr:delegated
-      - ./libs:/usr/app/libs:delegated
+      - ./node_modules:/usr/app/node_modules:cached
+      - ./apps/heimdallr:/usr/app/apps/heimdallr:cached
+      - ./libs:/usr/app/libs:cached
 
   mimir:
     build:
-      args:
-        app_name: mimir
       context: .
       dockerfile: images/node/Dockerfile
       target: application
@@ -36,37 +34,39 @@ services:
     depends_on:
       - db
       - mimisbrunnr
-    entrypoint: "yarn start:mimir"
+    entrypoint: "yarn start"
+    env_file:
+      - apps/mimir/.env.dev
     image: yggdrasil/mimir
     networks:
       - yggdrasil
     ports:
       - "3000"
     volumes:
-      - ./node_modules:/usr/app/node_modules:delegated
-      - ./apps/mimir:/usr/app/apps/mimir:delegated
-      - ./libs:/usr/app/libs:delegated
+      - ./node_modules:/usr/app/node_modules:cached
+      - ./apps/mimir:/usr/app/apps/mimir:cached
+      - ./libs:/usr/app/libs:cached
 
   valhalla:
     build:
-      args:
-        app_name: valhalla
       context: .
       dockerfile: images/node/Dockerfile
       target: application
     container_name: valhalla
     depends_on:
       - db
-    entrypoint: "yarn start:valhalla"
+    entrypoint: "yarn start"
+    env_file:
+      - apps/valhalla/.env.dev
     image: yggdrasil/valhalla
     networks:
       - yggdrasil
     ports:
       - "3000"
     volumes:
-      - ./node_modules:/usr/app/node_modules:delegated
-      - ./apps/valhalla:/usr/app/apps/valhalla:delegated
-      - ./libs:/usr/app/libs:delegated
+      - ./node_modules:/usr/app/node_modules:cached
+      - ./apps/valhalla:/usr/app/apps/valhalla:cached
+      - ./libs:/usr/app/libs:cached
 
   # Databases
   db:
