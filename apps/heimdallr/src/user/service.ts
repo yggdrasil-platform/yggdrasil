@@ -36,8 +36,8 @@ export default class UsersService {
     return user;
   }
 
-  public async findById(id: number): Promise<User | null> {
-    return await sendRequest<number, User | null>(
+  public async findById(id: string): Promise<User | null> {
+    return await sendRequest<string, User | null>(
       this.usersClient,
       UserMessagePatterns.FindById,
       id,
