@@ -41,7 +41,7 @@ export default class SessionsService {
       expiresIn: parseInt(session.expires_in),
       id: session.id,
       tokenType: session.token_type,
-      userId: parseInt(session.user_id),
+      userId: session.user_id,
     };
   }
 
@@ -59,7 +59,7 @@ export default class SessionsService {
       expiresIn: parseInt(session.expires_in),
       id,
       tokenType: session.token_type,
-      userId: parseInt(session.user_id),
+      userId: session.user_id,
     };
   }
 

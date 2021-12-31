@@ -19,5 +19,5 @@ export default class Session {
   })
   tokenType: string;
 
-  userId: number;
+  userId: string;
 }

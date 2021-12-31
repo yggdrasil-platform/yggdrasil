@@ -14,5 +14,5 @@ export default class Authentication {
     nullable: false,
     unique: true,
   })
-  userId: number;
+  userId: string;
 }
