@@ -6,3 +6,4 @@ export { default as IDatabaseEnvironmentVariables } from './IDatabaseEnvironment
 export { default as IHealth } from './IHealth';
 export { default as IRedisEnvironmentVariables } from './IRedisEnvironmentVariables';
 export { default as ITcpResponse } from './ITcpResponse';
+export { default as ITcpResponseErrorBody } from './ITcpResponseErrorBody';

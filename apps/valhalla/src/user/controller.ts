@@ -19,6 +19,9 @@ import { User } from '@app/common/models';
 // Providers
 import UserService from './service';
 
+// Utils
+import { getTcpError } from '@app/common/utils';
+
 @Controller()
 export default class UsersController {
   constructor(
@@ -35,7 +38,7 @@ export default class UsersController {
     } catch (error) {
       this.logger.error(error);
 
-      return [new UnprocessableEntityException(), null];
+      return [getTcpError(new UnprocessableEntityException()), null];
     }
   }
 

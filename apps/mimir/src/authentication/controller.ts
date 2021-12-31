@@ -23,6 +23,9 @@ import { Authentication } from '@app/common/models';
 // Providers
 import AuthenticationsService from './service';
 
+// Utils
+import { getTcpError } from '@app/common/utils';
+
 @Controller()
 export default class AuthenticationController {
   constructor(
@@ -52,7 +55,7 @@ export default class AuthenticationController {
     } catch (error) {
       this.logger.error(error);
 
-      return [new UnprocessableEntityException(), null];
+      return [getTcpError(new UnprocessableEntityException()), null];
     }
   }
 }
