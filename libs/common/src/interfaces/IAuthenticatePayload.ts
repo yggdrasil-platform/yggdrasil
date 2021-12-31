@@ -1,6 +1,6 @@
 interface IAuthenticatePayload {
   password: string;
-  userId: number;
+  userId: string;
 }
 
 export default IAuthenticatePayload;

@@ -50,8 +50,8 @@ export default class AuthService {
     return authentication;
   }
 
-  public async createSession(userId: number): Promise<Session> {
-    const session: Session | null = await sendRequest<number, Session | null>(
+  public async createSession(userId: string): Promise<Session> {
+    const session: Session | null = await sendRequest<string, Session | null>(
       this.authClient,
       AuthMessagePattern.CreateSession,
       userId,

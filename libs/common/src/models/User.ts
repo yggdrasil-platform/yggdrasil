@@ -13,8 +13,8 @@ export default class User {
   @Field(() => ID, {
     description: `The user's identifier`,
   })
-  @PrimaryGeneratedColumn()
-  id: number;
+  @PrimaryGeneratedColumn('uuid')
+  id: string;
 
   @Field({
     description: `The user's last name`,

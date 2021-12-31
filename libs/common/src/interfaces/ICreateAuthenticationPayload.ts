@@ -1,6 +1,6 @@
 interface ICreateAuthenticationPayload {
   password: string;
-  userId: number;
+  userId: string;
 }
 
 export default ICreateAuthenticationPayload;
