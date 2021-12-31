@@ -1,9 +1,12 @@
 import { Field, ID, ObjectType } from '@nestjs/graphql';
 import { Entity, Column, Index, PrimaryGeneratedColumn } from 'typeorm';
 
+// Models
+import BaseModel from './BaseModel';
+
 @ObjectType()
 @Entity()
-export default class User {
+export default class User extends BaseModel {
   @Field({
     description: `The user's first name`,
   })
