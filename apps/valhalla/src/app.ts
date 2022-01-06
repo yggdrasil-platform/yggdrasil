@@ -4,11 +4,11 @@ import { TerminusModule } from '@nestjs/terminus';
 import { TypeOrmModule, TypeOrmModuleOptions } from '@nestjs/typeorm';
 import * as Joi from 'joi';
 
+// Configs
+import ormConfig from '../ormconfig';
+
 // Interfaces
 import { IEnvironmentVariables } from './common/interfaces';
-
-// Models
-import { User } from '@app/common/models';
 
 // Modules
 import { HealthModule } from '@app/health';
@@ -46,14 +46,13 @@ import { UsersModule } from './user';
       useFactory: (
         configService: ConfigService<IEnvironmentVariables, true>,
       ): TypeOrmModuleOptions => ({
-        type: 'postgres',
-        host: configService.get<string>('DB_HOST'),
-        port: configService.get<number>('DB_PORT'),
-        username: configService.get<string>('DB_USER'),
-        password: configService.get<string>('DB_PASSWORD'),
+        ...ormConfig,
         database: configService.get<string>('DB_NAME'),
-        entities: [User],
-        synchronize: true, // TODO: remove from production
+        host: configService.get<string>('DB_HOST'),
+        password: configService.get<string>('DB_PASSWORD'),
+        port: configService.get<number>('DB_PORT'),
+        type: 'postgres',
+        username: configService.get<string>('DB_USER'),
       }),
     }),
     UsersModule,

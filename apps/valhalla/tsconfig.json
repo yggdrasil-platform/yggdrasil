@@ -2,8 +2,7 @@
   "extends": "../../tsconfig.json",
   "compilerOptions": {
     "declaration": false,
-    "lib": ["ES6"],
-    "outDir": "../../dist/apps/valhalla"
+    "lib": ["ES6"]
   },
-  "include": ["src/**/*"]
+  "include": ["migrations/*", "src/**/*"]
 }

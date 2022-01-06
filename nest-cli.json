@@ -4,9 +4,7 @@
   "monorepo": true,
   "root": "apps/heimdallr",
   "compilerOptions": {
-    "assets": ["**/*.proto"],
     "tsConfigPath": "tsconfig.json",
-    "watchAssets": true,
     "webpack": false
   },
   "projects": {

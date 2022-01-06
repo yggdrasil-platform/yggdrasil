@@ -2,8 +2,7 @@
   "extends": "../../tsconfig.json",
   "compilerOptions": {
     "declaration": false,
-    "lib": ["ES6"],
-    "outDir": "../../dist/apps/heimdallr"
+    "lib": ["ES6"]
   },
   "include": ["src/**/*"]
 }
