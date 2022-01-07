@@ -1,4 +1,4 @@
-import { IBaseEnvironmentVariables } from '@app/common/interfaces';
+import { IBaseEnvironmentVariables } from '@libs/common/interfaces';
 
 type IEnvironmentVariables = IBaseEnvironmentVariables;
 

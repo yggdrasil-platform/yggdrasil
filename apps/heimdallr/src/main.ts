@@ -4,14 +4,14 @@ import { NestApplication, NestFactory } from '@nestjs/core';
 import morgan from 'morgan';
 
 // Interfaces
-import { ILogLevel } from '@app/common/interfaces';
+import { ILogLevel } from '@libs/common/interfaces';
 import { IEnvironmentVariables } from './common/interfaces';
 
 // Modules
 import AppModule from './app';
 
 // Utils
-import { createLoggerService } from '@app/common/utils';
+import { createLoggerService } from '@libs/common/utils';
 
 (async (): Promise<void> => {
   const app: NestApplication = await NestFactory.create(AppModule);

@@ -3,10 +3,10 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 
 // Interfaces
-import { ICreateUserPayload } from '@app/common/interfaces';
+import { ICreateUserPayload } from '@libs/common/interfaces';
 
 // Models
-import { User } from '@app/common/models';
+import { User } from '@libs/common/models';
 
 @Injectable()
 export default class UsersService {

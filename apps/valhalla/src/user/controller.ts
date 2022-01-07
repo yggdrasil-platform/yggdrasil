@@ -8,19 +8,19 @@ import {
 import { MessagePattern, Payload } from '@nestjs/microservices';
 
 // Enums
-import { UserMessagePatterns } from '@app/common/enums';
+import { UserMessagePatterns } from '@libs/common/enums';
 
 // Interfaces
-import { ICreateUserPayload, ITcpResponse } from '@app/common/interfaces';
+import { ICreateUserPayload, ITcpResponse } from '@libs/common/interfaces';
 
 // Models
-import { User } from '@app/common/models';
+import { User } from '@libs/common/models';
 
 // Providers
 import UserService from './service';
 
 // Utils
-import { getTcpError } from '@app/common/utils';
+import { getTcpError } from '@libs/common/utils';
 
 @Controller()
 export default class UsersController {

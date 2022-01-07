@@ -1,12 +1,12 @@
 import { resolve } from 'path';
-import { ConnectionOptions } from 'typeorm';
+import { PostgresConnectionOptions } from 'typeorm/driver/postgres/PostgresConnectionOptions';
 
 // Models
-import { User } from '@app/common/models';
+import { User } from '@libs/common/models';
 
 const migrationsDir: string = resolve(__dirname, 'migrations');
 
-const config: ConnectionOptions = {
+const config: PostgresConnectionOptions = {
   cli: {
     migrationsDir,
   },

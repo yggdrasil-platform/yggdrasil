@@ -7,7 +7,7 @@ import { Strategy } from 'passport-custom';
 import { IRequest } from '../../common/interfaces';
 
 // Models
-import { Session, User } from '@app/common';
+import { Session, User } from '@libs/common';
 
 // Providers
 import AuthService from '../../auth/service';

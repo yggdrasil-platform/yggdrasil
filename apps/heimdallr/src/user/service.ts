@@ -6,16 +6,16 @@ import {
 import { ClientProxy } from '@nestjs/microservices';
 
 // Enums
-import { Providers, UserMessagePatterns } from '@app/common/enums';
+import { Providers, UserMessagePatterns } from '@libs/common/enums';
 
 // Interfaces
-import { ICreateUserPayload } from '@app/common/interfaces';
+import { ICreateUserPayload } from '@libs/common/interfaces';
 
 // Models
-import { User } from '@app/common/models';
+import { User } from '@libs/common/models';
 
 // Utils
-import { sendRequest } from '@app/common/utils';
+import { sendRequest } from '@libs/common/utils';
 
 @Injectable()
 export default class UsersService {

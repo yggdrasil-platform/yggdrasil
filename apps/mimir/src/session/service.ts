@@ -6,10 +6,10 @@ import { Redis } from 'ioredis';
 import { SessionDTO } from './dtos';
 
 // Enums
-import { Providers, RedisKeys } from '@app/common/enums';
+import { Providers, RedisKeys } from '@libs/common/enums';
 
 // Models
-import { Session } from '@app/common/models';
+import { Session } from '@libs/common/models';
 
 @Injectable()
 export default class SessionsService {

@@ -8,23 +8,23 @@ import {
 import { MessagePattern, Payload } from '@nestjs/microservices';
 
 // Enums
-import { AuthMessagePattern } from '@app/common/enums';
+import { AuthMessagePattern } from '@libs/common/enums';
 
 // Interfaces
 import {
   IAuthenticatePayload,
   ICreateAuthenticationPayload,
   ITcpResponse,
-} from '@app/common/interfaces';
+} from '@libs/common/interfaces';
 
 // Models
-import { Authentication } from '@app/common/models';
+import { Authentication } from '@libs/common/models';
 
 // Providers
 import AuthenticationsService from './service';
 
 // Utils
-import { getTcpError } from '@app/common/utils';
+import { getTcpError } from '@libs/common/utils';
 
 @Controller()
 export default class AuthenticationController {

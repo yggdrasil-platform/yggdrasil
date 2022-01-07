@@ -11,7 +11,7 @@ import ormConfig from '../ormconfig';
 import { IEnvironmentVariables } from './common/interfaces';
 
 // Modules
-import { HealthModule } from '@app/health';
+import { HealthModule } from '@libs/health';
 import { UsersModule } from './user';
 
 @Module({
@@ -53,7 +53,6 @@ import { UsersModule } from './user';
         host: configService.get<string>('DB_HOST'),
         password: configService.get<string>('DB_PASSWORD'),
         port: configService.get<number>('DB_PORT'),
-        type: 'postgres',
         username: configService.get<string>('DB_USER'),
       }),
     }),

@@ -1,16 +1,19 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { compare } from 'bcrypt';
+import { compare, hash } from 'bcrypt';
 import { Repository } from 'typeorm';
+
+// Constants
+import { SALT_ROUNDS } from '@libs/common/constants';
 
 // Interfaces
 import {
   ICreateAuthenticationPayload,
   IAuthenticatePayload,
-} from '@app/common/interfaces';
+} from '@libs/common/interfaces';
 
 // Models
-import { Authentication } from '@app/common/models';
+import { Authentication } from '@libs/common/models';
 
 @Injectable()
 export default class AuthenticationsService {
@@ -40,9 +43,11 @@ export default class AuthenticationsService {
   public async create(
     input: ICreateAuthenticationPayload,
   ): Promise<Authentication> {
-    const entity: Authentication = await this.authenticationRepository.create(
-      input,
-    );
+    const hashedPassword: string = await hash(input.password, SALT_ROUNDS);
+    const entity: Authentication = await this.authenticationRepository.create({
+      ...input,
+      password: hashedPassword,
+    });
 
     return await this.authenticationRepository.save(entity);
   }

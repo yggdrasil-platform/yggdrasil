@@ -1,7 +1,7 @@
 import { Request } from 'express';
 
 // Models
-import { User } from '@app/common/models';
+import { User } from '@libs/common/models';
 
 interface IRequest extends Request {
   user?: User;

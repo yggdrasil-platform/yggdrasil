@@ -3,10 +3,10 @@ import { ClientProxy } from '@nestjs/microservices';
 import { firstValueFrom } from 'rxjs';
 
 // Enums
-import { DefaultMessagePatterns, Providers } from '@app/common/enums';
+import { DefaultMessagePatterns, Providers } from '@libs/common/enums';
 
 // Interfaces
-import { IHealth } from '@app/common/interfaces';
+import { IHealth } from '@libs/common/interfaces';
 
 @Injectable()
 export default class HealthService {

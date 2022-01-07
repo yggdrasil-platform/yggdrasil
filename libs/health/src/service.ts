@@ -3,7 +3,7 @@ import { ConfigService } from '@nestjs/config';
 import { HealthCheckService, TypeOrmHealthIndicator } from '@nestjs/terminus';
 
 // Interfaces
-import { IBaseEnvironmentVariables, IHealth } from '@app/common/interfaces';
+import { IBaseEnvironmentVariables, IHealth } from '@libs/common/interfaces';
 
 @Injectable()
 export default class HealthService {

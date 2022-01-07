@@ -7,7 +7,7 @@ import {
 } from '@nestjs/common';
 
 // Enums
-import { Routes } from '@app/common/enums';
+import { Routes } from '@libs/common/enums';
 
 // Guards
 import { LocalAuthGuard } from '../common/guards';
@@ -16,7 +16,7 @@ import { LocalAuthGuard } from '../common/guards';
 import { IRequest } from '../common/interfaces';
 
 // Models
-import { Session } from '@app/common/models';
+import { Session } from '@libs/common/models';
 
 // Providers
 import AuthService from './service';

@@ -5,7 +5,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import AuthenticationsController from './controller';
 
 // Models
-import { Authentication } from '@app/common/models';
+import { Authentication } from '@libs/common/models';
 
 // Providers
 import AuthenticationsService from './service';

@@ -3,7 +3,7 @@ import { PassportStrategy } from '@nestjs/passport';
 import { Injectable, UnauthorizedException } from '@nestjs/common';
 
 // Models
-import { User } from '@app/common';
+import { User } from '@libs/common';
 
 // Providers
 import AuthService from '../../auth/service';

@@ -2,7 +2,7 @@ import {
   IBaseEnvironmentVariables,
   IDatabaseEnvironmentVariables,
   IRedisEnvironmentVariables,
-} from '@app/common/interfaces';
+} from '@libs/common/interfaces';
 
 interface IEnvironmentVariables
   extends IBaseEnvironmentVariables,

@@ -3,7 +3,7 @@ import { ClientProxy } from '@nestjs/microservices';
 import { firstValueFrom } from 'rxjs';
 
 // Interfaces
-import { ITcpResponse } from '@app/common';
+import { ITcpResponse } from '@libs/common';
 
 export default async function sendRequest<TPayload, TResult>(
   client: ClientProxy,

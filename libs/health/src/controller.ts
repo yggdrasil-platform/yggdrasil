@@ -2,10 +2,10 @@ import { Controller } from '@nestjs/common';
 import { MessagePattern } from '@nestjs/microservices';
 
 // Enums
-import { DefaultMessagePatterns } from '@app/common/enums';
+import { DefaultMessagePatterns } from '@libs/common/enums';
 
 // Interfaces
-import { IHealth } from '@app/common/interfaces';
+import { IHealth } from '@libs/common/interfaces';
 
 // Services
 import HealthService from './service';

@@ -1,7 +1,7 @@
 import {
   IBaseEnvironmentVariables,
   IDatabaseEnvironmentVariables,
-} from '@app/common/interfaces';
+} from '@libs/common/interfaces';
 
 type IEnvironmentVariables = IBaseEnvironmentVariables &
   IDatabaseEnvironmentVariables;

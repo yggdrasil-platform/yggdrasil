@@ -14,10 +14,13 @@
     "noImplicitThis": true,
     "outDir": "dist",
     "paths": {
-      "@app/common": ["libs/common/src"],
-      "@app/common/*": ["libs/common/src/*"],
-      "@app/health": ["libs/health/src"],
-      "@app/health/*": ["libs/health/src/*"]
+      "@apps/mimir/*": ["apps/mimir/*"],
+      "@apps/valhalla/*": ["apps/valhalla/*"],
+      "@libs/common": ["libs/common/src"],
+      "@libs/common/*": ["libs/common/src/*"],
+      "@libs/health": ["libs/health/src"],
+      "@libs/health/*": ["libs/health/src/*"],
+      "@test/*": ["test/*"]
     },
     "sourceMap": true,
     "removeComments": true,

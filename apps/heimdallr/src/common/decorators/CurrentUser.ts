@@ -5,7 +5,7 @@ import { GqlExecutionContext } from '@nestjs/graphql';
 import { IRequest } from '../interfaces';
 
 // Models
-import { User } from '@app/common/models';
+import { User } from '@libs/common/models';
 
 const CurrentUser = createParamDecorator(
   (data: unknown, context: ExecutionContext): User | undefined => {

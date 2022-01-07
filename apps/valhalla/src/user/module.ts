@@ -5,7 +5,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import UsersController from './controller';
 
 // Models
-import { User } from '@app/common/models';
+import { User } from '@libs/common/models';
 
 // Providers
 import UsersService from './service';

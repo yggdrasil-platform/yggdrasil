@@ -6,19 +6,19 @@ import {
 import { ClientProxy } from '@nestjs/microservices';
 
 // Enums
-import { AuthMessagePattern, Providers } from '@app/common/enums';
+import { AuthMessagePattern, Providers } from '@libs/common/enums';
 
 // Interfaces
 import {
   IAuthenticatePayload,
   ICreateAuthenticationPayload,
-} from '@app/common/interfaces';
+} from '@libs/common/interfaces';
 
 // Models
-import { Authentication, Session } from '@app/common/models';
+import { Authentication, Session } from '@libs/common/models';
 
 // Utils
-import { sendRequest } from '@app/common/utils';
+import { sendRequest } from '@libs/common/utils';
 
 @Injectable()
 export default class AuthService {

@@ -3,19 +3,19 @@ import { JwtService } from '@nestjs/jwt';
 import { MessagePattern, Payload } from '@nestjs/microservices';
 
 // Constants
-import { USER_JWT_EXPIRES_IN } from '@app/common/constants';
+import { USER_JWT_EXPIRES_IN } from '@libs/common/constants';
 
 // DTOs
 import { JwtDTO } from './dtos';
 
 // Enums
-import { AuthMessagePattern } from '@app/common/enums';
+import { AuthMessagePattern } from '@libs/common/enums';
 
 // Interfaces
-import { ITcpResponse } from '@app/common/interfaces';
+import { ITcpResponse } from '@libs/common/interfaces';
 
 // Models
-import { Session } from '@app/common/models';
+import { Session } from '@libs/common/models';
 
 // Providers
 import SessionsService from '../session/service';

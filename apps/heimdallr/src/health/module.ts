@@ -5,7 +5,7 @@ import { ConfigModule } from '@nestjs/config';
 import HealthController from './controller';
 
 // Providers
-import { AuthClientProvider, UserClientProvider } from '@app/common/providers';
+import { AuthClientProvider, UserClientProvider } from '@libs/common/providers';
 import HealthService from './service';
 
 @Module({

@@ -2,7 +2,7 @@ import { Field, InputType } from '@nestjs/graphql';
 import { IsNotEmpty, MaxLength } from 'class-validator';
 
 // Interfaces
-import { ICreateUserPayload } from '@app/common/interfaces';
+import { ICreateUserPayload } from '@libs/common/interfaces';
 
 @InputType()
 export default class RegisterInput implements ICreateUserPayload {

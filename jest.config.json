@@ -3,10 +3,13 @@
   "coverageDirectory": "./coverage",
   "moduleFileExtensions": ["js", "json", "ts"],
   "moduleNameMapper": {
-    "@app/common/(.*)": "<rootDir>/libs/common/src/$1",
-    "@app/common": "<rootDir>/libs/common/src",
-    "@app/health/(.*)": "<rootDir>/libs/health/src/$1",
-    "@app/health": "<rootDir>/libs/health/src"
+    "@apps/mimir/(.*)": "<rootDir>/apps/mimir/$1",
+    "@apps/valhalla/(.*)": "<rootDir>/apps/valhalla/$1",
+    "@libs/common/(.*)": "<rootDir>/libs/common/src/$1",
+    "@libs/common": "<rootDir>/libs/common/src",
+    "@libs/health/(.*)": "<rootDir>/libs/health/src/$1",
+    "@libs/health": "<rootDir>/libs/health/src",
+    "@test/(.*)": "<rootDir>/test/$1"
   },
   "rootDir": ".",
   "roots": ["<rootDir>/apps/", "<rootDir>/libs/"],

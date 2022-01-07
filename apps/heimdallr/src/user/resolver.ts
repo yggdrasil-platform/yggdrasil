@@ -11,7 +11,7 @@ import { GqlAuthGuard } from '../common/guards';
 import { RegisterInput } from './inputs';
 
 // Models
-import { Session, User } from '@app/common/models';
+import { Session, User } from '@libs/common/models';
 
 // Providers
 import AuthService from '../auth/service';

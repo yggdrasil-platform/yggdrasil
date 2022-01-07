@@ -9,7 +9,7 @@ import SessionsController from './controller';
 import { IEnvironmentVariables } from '../common/interfaces';
 
 // Providers
-import { RedisClientProvider } from '@app/common/providers';
+import { RedisClientProvider } from '@libs/common/providers';
 import SessionsService from './service';
 
 @Module({

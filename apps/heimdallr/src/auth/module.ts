@@ -5,7 +5,7 @@ import { ConfigModule } from '@nestjs/config';
 import AuthController from './controller';
 
 // Providers
-import { AuthClientProvider, UserClientProvider } from '@app/common/providers';
+import { AuthClientProvider, UserClientProvider } from '@libs/common/providers';
 import AuthService from './service';
 import UsersService from '../user/service';
 
