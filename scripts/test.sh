@@ -45,7 +45,7 @@ function main {
       break
     fi
 
-    sleep 5
+    sleep 2
   done
 
   # if the services are up and running, we can run tests

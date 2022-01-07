@@ -15,6 +15,7 @@
     "outDir": "dist",
     "paths": {
       "@apps/mimir/*": ["apps/mimir/*"],
+      "@apps/heimdallr/*": ["apps/heimdallr/*"],
       "@apps/valhalla/*": ["apps/valhalla/*"],
       "@libs/common": ["libs/common/src"],
       "@libs/common/*": ["libs/common/src/*"],

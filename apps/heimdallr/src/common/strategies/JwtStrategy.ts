@@ -4,10 +4,10 @@ import { ExtractJwt } from 'passport-jwt';
 import { Strategy } from 'passport-custom';
 
 // Interfaces
-import { IRequest } from '../../common/interfaces';
+import { IRequest } from '@libs/common/interfaces';
 
 // Models
-import { Session, User } from '@libs/common';
+import { Session, User } from '@libs/common/models';
 
 // Providers
 import AuthService from '../../auth/service';

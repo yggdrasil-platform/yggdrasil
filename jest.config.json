@@ -4,6 +4,7 @@
   "moduleFileExtensions": ["js", "json", "ts"],
   "moduleNameMapper": {
     "@apps/mimir/(.*)": "<rootDir>/apps/mimir/$1",
+    "@apps/heimdallr/(.*)": "<rootDir>/apps/heimdallr/$1",
     "@apps/valhalla/(.*)": "<rootDir>/apps/valhalla/$1",
     "@libs/common/(.*)": "<rootDir>/libs/common/src/$1",
     "@libs/common": "<rootDir>/libs/common/src",
@@ -17,5 +18,6 @@
   "transform": {
     "^.+\\.(t|j)s$": "ts-jest"
   },
-  "testEnvironment": "node"
+  "testEnvironment": "node",
+  "verbose": true
 }

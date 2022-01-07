@@ -7,8 +7,8 @@ import { PostgresConnectionOptions } from 'typeorm/driver/postgres/PostgresConne
 import mimirOrmConfig from '@apps/mimir/ormconfig';
 import valhallaOrmConfig from '@apps/valhalla/ormconfig';
 
-// Helpers
-import { runSeed } from '@test/helpers';
+// Utils
+import { runSeed } from '@test/utils';
 
 const { readdir } = promises;
 

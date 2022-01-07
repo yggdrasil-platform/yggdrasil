@@ -1,3 +1,4 @@
+import { HttpStatus } from '@nestjs/common';
 import { agent as request, Response, SuperAgentTest } from 'supertest';
 
 // Enums
@@ -14,7 +15,9 @@ describe(__filename, () => {
 
   describe(`GET ${Routes.Health}`, () => {
     it('should connect to all the other services successfully', async () => {
-      const response: Response = await agent.get(Routes.Health).expect(200);
+      const response: Response = await agent
+        .get(Routes.Health)
+        .expect(HttpStatus.OK);
 
       expect(response.body).toMatchSnapshot();
     });
