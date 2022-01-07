@@ -6,6 +6,8 @@
 
 FROM node:16.13.0-alpine AS application
 
+RUN apk --no-cache add curl
+
 WORKDIR /usr/app
 
 COPY package.json /usr/app

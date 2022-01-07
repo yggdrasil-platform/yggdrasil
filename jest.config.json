@@ -1,0 +1,18 @@
+{
+  "collectCoverageFrom": ["**/*.(t|j)s"],
+  "coverageDirectory": "./coverage",
+  "moduleFileExtensions": ["js", "json", "ts"],
+  "moduleNameMapper": {
+    "@app/common/(.*)": "<rootDir>/libs/common/src/$1",
+    "@app/common": "<rootDir>/libs/common/src",
+    "@app/health/(.*)": "<rootDir>/libs/health/src/$1",
+    "@app/health": "<rootDir>/libs/health/src"
+  },
+  "rootDir": ".",
+  "roots": ["<rootDir>/apps/", "<rootDir>/libs/"],
+  "testRegex": ".*\\.test\\.ts$",
+  "transform": {
+    "^.+\\.(t|j)s$": "ts-jest"
+  },
+  "testEnvironment": "node"
+}
