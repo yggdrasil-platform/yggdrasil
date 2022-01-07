@@ -1,0 +1,100 @@
+version: '3.5'
+
+services:
+  heimdallr_test:
+    build:
+      context: .
+      dockerfile: images/node/Dockerfile
+      target: application
+    container_name: heimdallr_test
+    depends_on:
+      - mimir_test
+      - valhalla_test
+    entrypoint: "yarn start"
+    env_file:
+      - apps/heimdallr/.env.test
+    image: yggdrasil/heimdallr_test
+    healthcheck:
+      test: [ "CMD", "curl", "-f", "http://127.0.0.1:3000/health" ]
+      interval: 5s
+      timeout: 30s
+      retries: 3
+      start_period: 5s
+    networks:
+      - yggdrasil_test
+      - midgard_test
+    ports:
+      - "${EXTERNAL_APP_PORT:-3001}:3000"
+    volumes:
+      - ./node_modules:/usr/app/node_modules:cached
+
+  mimir_test:
+    build:
+      context: .
+      dockerfile: images/node/Dockerfile
+      target: application
+    container_name: mimir_test
+    depends_on:
+      - db_test
+      - mimisbrunnr_test
+    entrypoint: "yarn start"
+    env_file:
+      - apps/mimir/.env.test
+    image: yggdrasil/mimir_test
+    networks:
+      - yggdrasil_test
+    ports:
+      - "3000"
+    volumes:
+      - ./node_modules:/usr/app/node_modules:cached
+
+  valhalla_test:
+    build:
+      context: .
+      dockerfile: images/node/Dockerfile
+      target: application
+    container_name: valhalla_test
+    depends_on:
+      - db_test
+    entrypoint: "yarn start"
+    env_file:
+      - apps/valhalla/.env.test
+    image: yggdrasil/valhalla_test
+    networks:
+      - yggdrasil_test
+    ports:
+      - "3000"
+    volumes:
+      - ./node_modules:/usr/app/node_modules:cached
+
+  db_test:
+    build:
+      context: images/postgres
+    container_name: db_test
+    environment:
+      POSTGRES_PASSWORD: ${EXTERNAL_DB_PASSWORD:-password}
+      POSTGRES_USER: ${EXTERNAL_DB_USER:-admin}
+    image: yggdrasil/db_test
+    networks:
+      - yggdrasil_test
+      - midgard_test
+    ports:
+      - "${EXTERNAL_DB_PORT:-5433}:5432"
+
+  mimisbrunnr_test:
+    container_name: mimisbrunnr_test
+    build:
+      context: images/redis
+    image: yggdrasil/mimisbrunnr_test
+    networks:
+      - yggdrasil_test
+      - midgard_test
+    ports:
+      - "6379"
+
+networks:
+  yggdrasil_test:
+    internal: true
+    name: yggdrasil_test
+  midgard_test:
+    name: midgard_test

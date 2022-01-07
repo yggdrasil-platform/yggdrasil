@@ -1,0 +1,57 @@
+{
+  "collection": "@nestjs/schematics",
+  "sourceRoot": "apps/heimdallr/src",
+  "monorepo": true,
+  "root": "apps/heimdallr",
+  "compilerOptions": {
+    "tsConfigPath": "tsconfig.json",
+    "webpack": false
+  },
+  "projects": {
+    "common": {
+      "type": "library",
+      "root": "libs/common",
+      "entryFile": "index",
+      "sourceRoot": "libs/common/src",
+      "compilerOptions": {
+        "tsConfigPath": "libs/common/tsconfig.json"
+      }
+    },
+    "health": {
+      "type": "library",
+      "root": "libs/health",
+      "entryFile": "index",
+      "sourceRoot": "libs/health/src",
+      "compilerOptions": {
+        "tsConfigPath": "libs/health/tsconfig.json"
+      }
+    },
+    "heimdallr": {
+      "type": "application",
+      "root": "apps/heimdallr",
+      "entryFile": "main",
+      "sourceRoot": "apps/heimdallr/src",
+      "compilerOptions": {
+        "tsConfigPath": "apps/heimdallr/tsconfig.json"
+      }
+    },
+    "mimir": {
+      "type": "application",
+      "root": "apps/v",
+      "entryFile": "main",
+      "sourceRoot": "apps/mimir/src",
+      "compilerOptions": {
+        "tsConfigPath": "apps/mimir/tsconfig.json"
+      }
+    },
+    "valhalla": {
+      "type": "application",
+      "root": "apps/valhalla",
+      "entryFile": "main",
+      "sourceRoot": "apps/valhalla/src",
+      "compilerOptions": {
+        "tsConfigPath": "apps/valhalla/tsconfig.json"
+      }
+    }
+  }
+}

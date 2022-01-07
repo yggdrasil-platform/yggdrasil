@@ -1,74 +1,103 @@
 # Yggdrasil
 
-Runs the Yggdrasil platform using Docker Compose.
+The monorepo that contains all the services that make up the Yggdrasil platform.
 
 #### Table of contents
 
-- [Prerequisites](#prerequisites)
-- [Usage](#usage)
-- [Misc](#misc)
-  - [Updating dependencies](#updating-dependencies)
-  - [Adding a new service](#adding-a-new-service)
 
-## Prerequisites
+- [Development](#development)
+  - [Prerequisites](#prerequisites)
+  - [Getting started](#getting-started)
+  - [Creating a new application](#creating-a-new-application)
+  - [Generating a migration](#generating-a-migration)
+- [Testing](#testing)
+  - [Running the e2e tests](#running-the-e2e-tests)
 
-* Install [NodeJS 14.15.1+](https://nodejs.org/en/download/).
+## Development
+
+### Prerequisites
+
+* Install [NodeJS v16.13.0+](https://nodejs.org/en/download/).
 * Install [Yarn](https://yarnpkg.com/).
 * Install [Docker 17.12.0+](https://docs.docker.com/install/).
 * Install [Docker Compose](https://docs.docker.com/compose/install/).
-* Install [jq](https://stedolan.github.io/jq/download/).
 
-## Usage
+<sup>[Back to top ^](#table-of-contents)</sup>
 
-1. Run the Makefile to set up dependencies and configurations.
-* This pulls all the repos that are needed;
-* installs all the necessary dependencies, and;
-* creates the `.env` files in a `.config` directory that is used by Docker.
-```bash
-make
+### Getting started
+
+1. Install dependencies:
+
+```shell
+yarn install
 ```
 
-2. To start the services, simply run:
-```bash
+2. Run Docker compose:
+```shell
 docker-compose up
 ```
 
-## Misc
+<sup>[Back to top ^](#table-of-contents)</sup>
 
-### Updating dependencies
+### Creating a new application
 
-As the services change, you will need to pull again and update any dependencies. Simply run:
+1. TBC
 
-```shell script
-make update
-```
-
-### Adding a new service
-
-1. Add a new JSON object to the array stored in the [services.json](./services.json), this ensures the `Makefile` scripts know where to find the service.
-
-```json
-{
-  "name": "REPO_NAME",
-  "source_url": "git@github.com:USER/REPO_NAME.git"
-}
-```
-
-2. Add the new service to the [docker-compose.yml](./docker-compose.yml) using the format similar to the others:
+2. Add the new application to the [docker-compose.yml](./docker-compose.yml) using the format similar to the others:
 ```yaml
-awesome-service:
-    container_name: awesome_service
-    image: yggdrasil/awesome_service
-    build:
-      context: images/node14.15.1-alpine # Use one of the images in the ./images directory, or roll your own!
-    volumes:
-      - ../awesome-service-repo-name:/usr/app:delegated
-    env_file:
-      - .config/awesome-service-repo-name/.env # An optional step, if the env file is needed.
-    working_dir: /usr/app
-    ports:
-      - "1337:1337"
-    command: yarn start # This is the step that start the dev/watch process.
-    depends_on:
-      - awesome_service_db
+awesome_service:
+  build:
+    context: .
+    dockerfile: images/node/Dockerfile # or another custom image
+    target: application
+  container_name: awesome_service
+  depends_on:
+    - db
+  entrypoint: "yarn start:watch"
+  env_file:
+    - apps/container_name/.env.dev
+  image: yggdrasil/container_name
+  networks:
+    - yggdrasil # this is the internal network
+  ports:
+    - "3000"
+  volumes:
+    - ./node_modules:/usr/app/node_modules:cached # use the local node_modules
+    - ./apps/awesome_service:/usr/app/apps/awesome_service:cached
+    - ./libs:/usr/app/libs:cached
 ```
+
+<sup>[Back to top ^](#table-of-contents)</sup>
+
+### Generating a migration
+
+1. To generate a new migration use the following command:
+```bash
+yarn migrations:generate valhalla InsertMigrationNameHere
+```
+
+<sup>[Back to top ^](#table-of-contents)</sup>
+
+## Testing
+
+### Running the e2e tests
+
+1. The following command will perform several actions;
+   * it will start the (testing) docker containers,
+   * wait for a health check on the `heimdallr` application,
+   * run the tests against the docker containers,
+   * stop and remove all the containers
+```shell
+yarn test:e2e
+```
+
+> 💡 **TIP:** If you want to not run all tests in the script, for instance you want to use an external test runner in your IDE, you can start the testing docker containers using:
+> ```shell
+> docker-compose -f docker-compose.test.yml up
+> ```
+> Then once the containers are up and running, you can use `jest` (ensure you use the `--runInBand` flag because a database is used and will cause data integrity problems):
+> ```shell
+> jest --runInBand
+> ```
+
+<sup>[Back to top ^](#table-of-contents)</sup>

@@ -1,0 +1,8 @@
+{
+  "extends": "../../tsconfig.json",
+  "compilerOptions": {
+    "declaration": false,
+    "lib": ["ES6"]
+  },
+  "include": ["migrations/*", "src/**/*"]
+}

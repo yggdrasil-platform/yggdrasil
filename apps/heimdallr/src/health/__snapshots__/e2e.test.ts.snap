@@ -1,0 +1,44 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`/home/kieran/code/repos/yggdrasil-platform/yggdrasil/apps/heimdallr/src/health/e2e.test.ts GET /health should connect to all the other services successfully 1`] = `
+Array [
+  Object {
+    "environment": "test",
+    "health": Object {
+      "details": Object {
+        "database": Object {
+          "status": "up",
+        },
+      },
+      "error": Object {},
+      "info": Object {
+        "database": Object {
+          "status": "up",
+        },
+      },
+      "status": "ok",
+    },
+    "name": "mimir",
+    "version": "1.1.0",
+  },
+  Object {
+    "environment": "test",
+    "health": Object {
+      "details": Object {
+        "database": Object {
+          "status": "up",
+        },
+      },
+      "error": Object {},
+      "info": Object {
+        "database": Object {
+          "status": "up",
+        },
+      },
+      "status": "ok",
+    },
+    "name": "valhalla",
+    "version": "1.1.0",
+  },
+]
+`;
