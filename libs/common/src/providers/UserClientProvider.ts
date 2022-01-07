@@ -10,16 +10,18 @@ import {
 import { Providers } from '../enums';
 
 // Interfaces
-import { IBaseEnvironmentVariables } from '../interfaces';
+import { IApplicationsEnvironmentVariables } from '../interfaces';
 
 const UserClientProvider: FactoryProvider<ClientProxy> = {
   inject: [ConfigService],
   provide: Providers.UserClient,
-  useFactory: (configService: ConfigService<IBaseEnvironmentVariables, true>) =>
+  useFactory: (
+    configService: ConfigService<IApplicationsEnvironmentVariables, true>,
+  ) =>
     ClientProxyFactory.create({
       options: {
-        host: configService.get<string>('USER_SERVICE_HOST'),
-        port: configService.get<number>('USER_SERVICE_PORT'),
+        host: configService.get<string>('USER_APP_HOST'),
+        port: configService.get<number>('USER_APP_PORT'),
       },
       transport: Transport.TCP,
     }),

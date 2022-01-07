@@ -22,11 +22,13 @@ services:
       start_period: 5s
     networks:
       - yggdrasil_test
-      - midgard_test
+      - bifrost_test
     ports:
       - "${EXTERNAL_APP_PORT:-3001}:3000"
     volumes:
       - ./node_modules:/usr/app/node_modules:cached
+      - ./apps/heimdallr:/usr/app/apps/heimdallr:cached
+      - ./libs:/usr/app/libs:cached
 
   mimir_test:
     build:
@@ -47,6 +49,8 @@ services:
       - "3000"
     volumes:
       - ./node_modules:/usr/app/node_modules:cached
+      - ./apps/mimir:/usr/app/apps/mimir:cached
+      - ./libs:/usr/app/libs:cached
 
   valhalla_test:
     build:
@@ -66,6 +70,8 @@ services:
       - "3000"
     volumes:
       - ./node_modules:/usr/app/node_modules:cached
+      - ./apps/valhalla:/usr/app/apps/valhalla:cached
+      - ./libs:/usr/app/libs:cached
 
   db_test:
     build:
@@ -77,7 +83,7 @@ services:
     image: yggdrasil/db_test
     networks:
       - yggdrasil_test
-      - midgard_test
+      - bifrost_test
     ports:
       - "${EXTERNAL_DB_PORT:-5433}:5432"
 
@@ -88,7 +94,7 @@ services:
     image: yggdrasil/mimisbrunnr_test
     networks:
       - yggdrasil_test
-      - midgard_test
+      - bifrost_test
     ports:
       - "6379"
 
@@ -96,5 +102,5 @@ networks:
   yggdrasil_test:
     internal: true
     name: yggdrasil_test
-  midgard_test:
-    name: midgard_test
+  bifrost_test:
+    name: bifrost_test

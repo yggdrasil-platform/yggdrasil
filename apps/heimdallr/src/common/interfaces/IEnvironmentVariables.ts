@@ -1,5 +1,9 @@
-import { IBaseEnvironmentVariables } from '@libs/common/interfaces';
+import {
+  IApplicationsEnvironmentVariables,
+  IBaseEnvironmentVariables,
+} from '@libs/common/interfaces';
 
-type IEnvironmentVariables = IBaseEnvironmentVariables;
+type IEnvironmentVariables = IApplicationsEnvironmentVariables &
+  IBaseEnvironmentVariables;
 
 export default IEnvironmentVariables;

@@ -26,8 +26,8 @@ import { createLoggerService } from '@libs/common/utils';
   app.connectMicroservice<MicroserviceOptions>({
     transport: Transport.TCP,
     options: {
-      host: configService.get<string>('USER_SERVICE_HOST'),
-      port: configService.get<number>('USER_SERVICE_PORT'),
+      host: configService.get<string>('USER_APP_HOST'),
+      port: configService.get<number>('USER_APP_PORT'),
     },
   });
   app.useLogger(logger);

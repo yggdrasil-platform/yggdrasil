@@ -17,7 +17,7 @@ services:
     image: yggdrasil/heimdallr
     networks:
       - yggdrasil
-      - midgard
+      - bifrost
     ports:
       - "3000:3000"
     volumes:
@@ -79,7 +79,7 @@ services:
     image: yggdrasil/db
     networks:
       - yggdrasil
-      - midgard
+      - bifrost
     ports:
       - "5432:5432"
 
@@ -90,7 +90,7 @@ services:
     image: yggdrasil/mimisbrunnr
     networks:
       - yggdrasil
-      - midgard
+      - bifrost
     ports:
       - "6379:6379"
 
@@ -98,5 +98,5 @@ networks:
   yggdrasil:
     internal: true
     name: yggdrasil
-  midgard:
-    name: midgard
+  bifrost:
+    name: bifrost
