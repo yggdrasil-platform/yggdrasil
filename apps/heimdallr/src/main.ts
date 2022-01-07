@@ -4,6 +4,7 @@ import { NestApplication, NestFactory } from '@nestjs/core';
 import morgan from 'morgan';
 
 // Interfaces
+import { ILogLevel } from '@app/common/interfaces';
 import { IEnvironmentVariables } from './common/interfaces';
 
 // Modules
@@ -18,7 +19,7 @@ import { createLoggerService } from '@app/common/utils';
     app.get(ConfigService);
   const logger: LoggerService = createLoggerService(
     configService.get<string>('APP_NAME'),
-    configService.get<string>('LOG_LEVEL'),
+    configService.get<ILogLevel>('LOG_LEVEL'),
   );
 
   app.useLogger(logger);

@@ -33,7 +33,9 @@ import { SessionsModule } from './session';
         DB_PORT: Joi.number().default(5432),
         DB_USER: Joi.string().required(),
         JWT_SECRET_KEY: Joi.string().required(),
-        LOG_LEVEL: Joi.string(),
+        LOG_LEVEL: Joi.string()
+          .default('error')
+          .valid('debug', 'error', 'info', 'silent', 'warn'),
         NODE_ENV: Joi.string().required(),
         PORT: Joi.number().default(3000),
         REDIS_HOST: Joi.string().required(),
