@@ -18,8 +18,8 @@ function main {
   health=starting
   service_name=heimdallr_test
 
-  APP_PORT=3001
-  export APP_PORT
+  EXTERNAL_PORT=3001
+  export EXTERNAL_PORT
 
   set_vars
 

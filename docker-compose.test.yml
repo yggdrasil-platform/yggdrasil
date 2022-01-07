@@ -15,7 +15,7 @@ services:
       - apps/heimdallr/.env.test
     image: yggdrasil/heimdallr_test
     healthcheck:
-      test: [ "CMD", "curl", "-f", "http://127.0.0.1:${APP_PORT:-3001}/health" ]
+      test: [ "CMD", "curl", "-f", "http://127.0.0.1:3000/health" ]
       interval: 5s
       timeout: 30s
       retries: 3
@@ -24,7 +24,7 @@ services:
       - yggdrasil_test
       - midgard_test
     ports:
-      - "${APP_PORT:-3001}:3000"
+      - "${EXTERNAL_PORT:-3001}:3000"
     volumes:
       - ./node_modules:/usr/app/node_modules:cached
 
