@@ -1,5 +1,6 @@
 enum Routes {
   Health = '/health',
+  GraphQL = '/graphql',
   Login = '/login',
 }
 

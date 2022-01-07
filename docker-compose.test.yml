@@ -24,7 +24,7 @@ services:
       - yggdrasil_test
       - midgard_test
     ports:
-      - "${EXTERNAL_PORT:-3001}:3000"
+      - "${EXTERNAL_APP_PORT:-3001}:3000"
     volumes:
       - ./node_modules:/usr/app/node_modules:cached
 
@@ -72,14 +72,14 @@ services:
       context: images/postgres
     container_name: db_test
     environment:
-      POSTGRES_PASSWORD: password
-      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: ${EXTERNAL_DB_PASSWORD:-password}
+      POSTGRES_USER: ${EXTERNAL_DB_USER:-admin}
     image: yggdrasil/db_test
     networks:
       - yggdrasil_test
       - midgard_test
     ports:
-      - "5433:5432"
+      - "${EXTERNAL_DB_PORT:-5433}:5432"
 
   mimisbrunnr_test:
     container_name: mimisbrunnr_test

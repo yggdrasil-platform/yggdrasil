@@ -18,8 +18,11 @@ function main {
   health=starting
   service_name=heimdallr_test
 
-  EXTERNAL_PORT=3001
-  export EXTERNAL_PORT
+  EXTERNAL_APP_PORT=3001
+  EXTERNAL_DB_PASSWORD="password"
+  EXTERNAL_DB_PORT=5433
+  EXTERNAL_DB_USER="admin"
+  export EXTERNAL_APP_PORT EXTERNAL_DB_PASSWORD EXTERNAL_DB_PORT EXTERNAL_DB_USER
 
   set_vars
 

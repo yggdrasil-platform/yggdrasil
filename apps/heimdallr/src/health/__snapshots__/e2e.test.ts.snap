@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`/health should connect to all the other services successfully 1`] = `
+exports[`/home/kieran/code/repos/yggdrasil-platform/yggdrasil/apps/heimdallr/src/health/e2e.test.ts GET /health should connect to all the other services successfully 1`] = `
 Array [
   Object {
     "environment": "test",
