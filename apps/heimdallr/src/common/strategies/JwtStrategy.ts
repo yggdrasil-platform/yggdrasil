@@ -4,7 +4,7 @@ import { ExtractJwt } from 'passport-jwt';
 import { Strategy } from 'passport-custom';
 
 // Interfaces
-import { IRequest } from '@libs/common/interfaces';
+import { IRequest } from '../interfaces';
 
 // Models
 import { Session, User } from '@libs/common/models';
