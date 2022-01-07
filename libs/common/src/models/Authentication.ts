@@ -1,8 +1,4 @@
-import { hash } from 'bcrypt';
-import { BeforeInsert, Column, Entity } from 'typeorm';
-
-// Constants
-import { SALT_ROUNDS } from '../constants';
+import { Column, Entity } from 'typeorm';
 
 // Models
 import BaseModel from './BaseModel';
@@ -19,9 +15,4 @@ export default class Authentication extends BaseModel {
     unique: true,
   })
   userId: string;
-
-  @BeforeInsert()
-  async setPassword(password: string) {
-    this.password = await hash(password || this.password, SALT_ROUNDS);
-  }
 }
