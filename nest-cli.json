@@ -35,9 +35,18 @@
         "tsConfigPath": "apps/heimdallr/tsconfig.json"
       }
     },
+    "midgard": {
+      "type": "application",
+      "root": "apps/midgard",
+      "entryFile": "main",
+      "sourceRoot": "apps/midgard/src",
+      "compilerOptions": {
+        "tsConfigPath": "apps/midgard/tsconfig.json"
+      }
+    },
     "mimir": {
       "type": "application",
-      "root": "apps/v",
+      "root": "apps/mimir",
       "entryFile": "main",
       "sourceRoot": "apps/mimir/src",
       "compilerOptions": {

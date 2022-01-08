@@ -29,7 +29,7 @@ services:
       - ./node_modules:/usr/app/node_modules:cached
       - ./apps/heimdallr:/usr/app/apps/heimdallr:cached
       - ./libs:/usr/app/libs:cached
-
+  
   mimir_test:
     build:
       context: .

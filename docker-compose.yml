@@ -25,6 +25,26 @@ services:
       - ./apps/heimdallr:/usr/app/apps/heimdallr:cached
       - ./libs:/usr/app/libs:cached
 
+  midgard:
+    build:
+      context: .
+      dockerfile: images/node/Dockerfile
+      target: application
+    container_name: midgard
+    entrypoint: "yarn start:watch"
+    env_file:
+      - apps/midgard/.env.dev
+    image: yggdrasil/midgard
+    networks:
+      - yggdrasil
+      - bifrost
+    ports:
+      - "8080:8080"
+    volumes:
+      - ./node_modules:/usr/app/node_modules:cached
+      - ./apps/midgard:/usr/app/apps/midgard:cached
+      - ./libs:/usr/app/libs:cached
+
   mimir:
     build:
       context: .
