@@ -25,7 +25,7 @@ import { UsersModule } from './user';
         DB_HOST: Joi.string().required(),
         DB_NAME: Joi.string().required(),
         DB_PASSWORD: Joi.string().required(),
-        DB_PORT: Joi.number().default(5432),
+        DB_PORT: Joi.number().default(27017),
         DB_USER: Joi.string().required(),
         LOG_LEVEL: Joi.string()
           .default('error')

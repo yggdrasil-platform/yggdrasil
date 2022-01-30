@@ -1,5 +1,5 @@
 import { Logger, Module } from '@nestjs/common';
-import { TypeOrmModule } from '@nestjs/typeorm';
+import { MongooseModule, SchemaFactory } from '@nestjs/mongoose';
 
 // Controllers
 import AuthenticationsController from './controller';
@@ -12,7 +12,14 @@ import AuthenticationsService from './service';
 
 @Module({
   controllers: [AuthenticationsController],
-  imports: [TypeOrmModule.forFeature([Authentication])],
+  imports: [
+    MongooseModule.forFeature([
+      {
+        name: Authentication.name,
+        schema: SchemaFactory.createForClass(Authentication),
+      },
+    ]),
+  ],
   providers: [AuthenticationsService, Logger],
 })
 export default class AuthenticationsModule {}

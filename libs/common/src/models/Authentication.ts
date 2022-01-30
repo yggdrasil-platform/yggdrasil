@@ -1,17 +1,21 @@
-import { Column, Entity } from 'typeorm';
+import { Prop, Schema } from '@nestjs/mongoose';
 
 // Models
 import BaseModel from './BaseModel';
 
-@Entity()
+@Schema({
+  toObject: {
+    versionKey: false,
+  },
+})
 export default class Authentication extends BaseModel {
-  @Column({
-    nullable: false,
+  @Prop({
+    required: true,
   })
   password: string;
 
-  @Column({
-    nullable: false,
+  @Prop({
+    required: true,
     unique: true,
   })
   userId: string;

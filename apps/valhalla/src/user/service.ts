@@ -16,9 +16,11 @@ export default class UsersService {
   ) {}
 
   public async create(input: ICreateUserPayload): Promise<User> {
+    const now: Date = new Date();
     let document: IDocumentModel<User> = new this.userModel({
       ...input,
-      createdAt: new Date(),
+      createdAt: now,
+      updatedAt: now,
     });
 
     document = await document.save();
@@ -27,14 +29,28 @@ export default class UsersService {
   }
 
   public async findById(id: string): Promise<User | null> {
-    return await this.userModel.findById(id).exec();
+    const document: IDocumentModel<User> | null = await this.userModel
+      .findById(id)
+      .exec();
+
+    if (document) {
+      return document.toObject();
+    }
+
+    return null;
   }
 
   public async findByUsername(username: string): Promise<User | null> {
-    return await this.userModel
+    const document: IDocumentModel<User> | null = await this.userModel
       .findOne({
         username,
       })
       .exec();
+
+    if (document) {
+      return document.toObject();
+    }
+
+    return null;
   }
 }

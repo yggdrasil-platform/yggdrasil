@@ -52,7 +52,7 @@ services:
       target: application
     container_name: mimir
     depends_on:
-      - db
+      - mongo
       - mimisbrunnr
     entrypoint: "yarn start:watch"
     env_file:
@@ -89,20 +89,6 @@ services:
       - ./libs:/usr/app/libs:cached
 
   # Databases
-  db:
-    build:
-      context: images/postgres
-    container_name: db
-    environment:
-      POSTGRES_PASSWORD: password
-      POSTGRES_USER: admin
-    image: yggdrasil/db
-    networks:
-      - yggdrasil
-      - bifrost
-    ports:
-      - "5432:5432"
-
   mongo:
     build:
       context: images/mongo

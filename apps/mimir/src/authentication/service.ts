@@ -1,15 +1,16 @@
 import { Injectable } from '@nestjs/common';
-import { InjectRepository } from '@nestjs/typeorm';
+import { InjectModel } from '@nestjs/mongoose';
 import { compare, hash } from 'bcrypt';
-import { Repository } from 'typeorm';
+import { Model } from 'mongoose';
 
 // Constants
 import { SALT_ROUNDS } from '@libs/common/constants';
 
 // Interfaces
 import {
-  ICreateAuthenticationPayload,
   IAuthenticatePayload,
+  ICreateAuthenticationPayload,
+  IDocumentModel,
 } from '@libs/common/interfaces';
 
 // Models
@@ -18,37 +19,44 @@ import { Authentication } from '@libs/common/models';
 @Injectable()
 export default class AuthenticationsService {
   constructor(
-    @InjectRepository(Authentication)
-    private readonly authenticationRepository: Repository<Authentication>,
+    @InjectModel(Authentication.name)
+    private readonly authenticationModel: Model<IDocumentModel<Authentication>>,
   ) {}
 
   public async authenticate({
     password,
     userId,
   }: IAuthenticatePayload): Promise<boolean> {
-    const entity: Authentication | undefined =
-      await this.authenticationRepository.findOne({
-        where: {
+    const document: IDocumentModel<Authentication> | null =
+      await this.authenticationModel
+        .findOne({
           userId,
-        },
-      });
+        })
+        .exec();
 
-    if (!entity) {
+    if (!document) {
       return false;
     }
 
-    return await compare(password, entity.password);
+    return await compare(password, document.password);
   }
 
   public async create(
     input: ICreateAuthenticationPayload,
   ): Promise<Authentication> {
     const hashedPassword: string = await hash(input.password, SALT_ROUNDS);
-    const entity: Authentication = await this.authenticationRepository.create({
-      ...input,
-      password: hashedPassword,
-    });
+    const now: Date = new Date();
+    let document: IDocumentModel<Authentication> = new this.authenticationModel(
+      {
+        ...input,
+        createdAt: now,
+        password: hashedPassword,
+        updatedAt: now,
+      },
+    );
 
-    return await this.authenticationRepository.save(entity);
+    document = await document.save();
+
+    return document.toObject();
   }
 }
