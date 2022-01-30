@@ -103,6 +103,20 @@ services:
     ports:
       - "5432:5432"
 
+  mongo:
+    build:
+      context: images/mongo
+    container_name: mongo
+    environment:
+      MONGO_INITDB_ROOT_PASSWORD: password
+      MONGO_INITDB_ROOT_USERNAME: admin
+    image: yggdrasil/mongo
+    networks:
+      - yggdrasil
+      - bifrost
+    ports:
+      - "27017:27017"
+
   mimisbrunnr:
     container_name: mimisbrunnr
     build:
