@@ -74,7 +74,7 @@ services:
       target: application
     container_name: valhalla
     depends_on:
-      - db
+      - mongo
     entrypoint: "yarn start:watch"
     env_file:
       - apps/valhalla/.env.dev

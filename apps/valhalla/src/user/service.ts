@@ -1,9 +1,9 @@
 import { Injectable } from '@nestjs/common';
-import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { InjectModel } from '@nestjs/mongoose';
+import { Model } from 'mongoose';
 
 // Interfaces
-import { ICreateUserPayload } from '@libs/common/interfaces';
+import { ICreateUserPayload, IDocumentModel } from '@libs/common/interfaces';
 
 // Models
 import { User } from '@libs/common/models';
@@ -11,23 +11,30 @@ import { User } from '@libs/common/models';
 @Injectable()
 export default class UsersService {
   constructor(
-    @InjectRepository(User)
-    private readonly userRepository: Repository<User>,
+    @InjectModel(User.name)
+    private readonly userModel: Model<IDocumentModel<User>>,
   ) {}
 
   public async create(input: ICreateUserPayload): Promise<User> {
-    const entity: User = await this.userRepository.create(input);
-
-    return await this.userRepository.save(entity);
-  }
-
-  public async findById(id: number): Promise<User | undefined> {
-    return await this.userRepository.findOne(id);
-  }
-
-  public async findByUsername(username: string): Promise<User | undefined> {
-    return await this.userRepository.findOne({
-      username,
+    let document: IDocumentModel<User> = new this.userModel({
+      ...input,
+      createdAt: new Date(),
     });
+
+    document = await document.save();
+
+    return document.toObject();
+  }
+
+  public async findById(id: string): Promise<User | null> {
+    return await this.userModel.findById(id).exec();
+  }
+
+  public async findByUsername(username: string): Promise<User | null> {
+    return await this.userModel
+      .findOne({
+        username,
+      })
+      .exec();
   }
 }

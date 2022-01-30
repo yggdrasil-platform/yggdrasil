@@ -32,6 +32,6 @@ export default class AuthController {
       throw new UnauthorizedException();
     }
 
-    return await this.authService.createSession(req.user.id);
+    return await this.authService.createSession(req.user._id);
   }
 }

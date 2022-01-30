@@ -1,11 +1,8 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
+import { MongooseModule, MongooseModuleOptions } from '@nestjs/mongoose';
 import { TerminusModule } from '@nestjs/terminus';
-import { TypeOrmModule, TypeOrmModuleOptions } from '@nestjs/typeorm';
 import * as Joi from 'joi';
-
-// Configs
-import ormConfig from '../ormconfig';
 
 // Interfaces
 import { IEnvironmentVariables } from './common/interfaces';
@@ -41,21 +38,23 @@ import { UsersModule } from './user';
       }),
     }),
     HealthModule,
-    TerminusModule,
-    TypeOrmModule.forRootAsync({
+    MongooseModule.forRootAsync({
       imports: [ConfigModule],
       inject: [ConfigService],
       useFactory: (
         configService: ConfigService<IEnvironmentVariables, true>,
-      ): TypeOrmModuleOptions => ({
-        ...ormConfig,
-        database: configService.get<string>('DB_NAME'),
-        host: configService.get<string>('DB_HOST'),
-        password: configService.get<string>('DB_PASSWORD'),
-        port: configService.get<number>('DB_PORT'),
-        username: configService.get<string>('DB_USER'),
+      ): MongooseModuleOptions => ({
+        authSource: 'admin',
+        connectionName: configService.get<string>('APP_NAME'),
+        dbName: configService.get<string>('DB_NAME'),
+        pass: configService.get<string>('DB_PASSWORD'),
+        uri: `mongodb://${configService.get<string>(
+          'DB_HOST',
+        )}:${configService.get<string>('DB_PORT')}`,
+        user: configService.get<string>('DB_USER'),
       }),
     }),
+    TerminusModule,
     UsersModule,
   ],
 })

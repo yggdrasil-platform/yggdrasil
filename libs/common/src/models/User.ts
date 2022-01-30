@@ -1,37 +1,47 @@
 import { Field, ID, ObjectType } from '@nestjs/graphql';
-import { Entity, Column, Index, PrimaryGeneratedColumn } from 'typeorm';
+import { Prop, Schema } from '@nestjs/mongoose';
+
+// Interfaces
+import { IDocumentModel } from '@libs/common/interfaces';
 
 // Models
 import BaseModel from './BaseModel';
 
 @ObjectType()
-@Entity()
-export default class User extends BaseModel {
+@Schema({
+  toObject: {
+    virtuals: true,
+    versionKey: false,
+  },
+})
+export default class User {
+  // export default class User extends BaseModel {
+  @Prop()
+  createdAt: Date;
+
   @Field({
     description: `The user's first name`,
   })
-  @Column()
+  @Prop()
   firstName: string;
 
   @Field(() => ID, {
     description: `The user's identifier`,
   })
-  @PrimaryGeneratedColumn('uuid')
-  id: string;
+  _id: string;
 
   @Field({
     description: `The user's last name`,
   })
-  @Column()
+  @Prop()
   lastName: string;
 
   @Field({
     description: `The user's unique username`,
   })
-  @Column({
-    nullable: false,
+  @Prop({
+    required: true,
     unique: true,
   })
-  @Index()
   username: string;
 }
