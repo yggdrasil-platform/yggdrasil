@@ -1,6 +1,6 @@
 {
   "name": "yggdrasil",
-  "version": "1.1.0",
+  "version": "2.0.0",
   "description": "The core of the Yggdrasil platform",
   "main": "dist/heimdallr/main.js",
   "author": {
@@ -71,6 +71,12 @@
     "@nestjs/platform-express": "^8.2.4",
     "@nestjs/terminus": "^8.0.3",
     "@nestjs/typeorm": "^8.0.2",
+    "@semantic-release/changelog": "^6.0.1",
+    "@semantic-release/commit-analyzer": "^9.0.2",
+    "@semantic-release/git": "^10.0.1",
+    "@semantic-release/github": "^8.0.2",
+    "@semantic-release/npm": "^9.0.0",
+    "@semantic-release/release-notes-generator": "^10.0.3",
     "apollo-server-errors": "^3.3.0",
     "apollo-server-express": "^3.5.0",
     "bcrypt": "^5.0.1",
@@ -88,6 +94,7 @@
     "pg": "^8.7.1",
     "reflect-metadata": "^0.1.13",
     "rxjs": "^7.4.0",
+    "semantic-release": "^19.0.2",
     "typeorm": "^0.2.41",
     "winston": "^3.3.3"
   }
