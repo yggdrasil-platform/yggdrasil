@@ -29,7 +29,7 @@
   "devDependencies": {
     "@commitlint/cli": "^15.0.0",
     "@commitlint/config-conventional": "^15.0.0",
-    "@nestjs/cli": "^8.1.6",
+    "@nestjs/cli": "^8.2.0",
     "@nestjs/testing": "^8.2.4",
     "@types/bcrypt": "^5.0.0",
     "@types/express": "^4.17.13",
@@ -61,9 +61,9 @@
     "uuid": "^8.3.2"
   },
   "dependencies": {
-    "@nestjs/common": "^8.2.4",
+    "@nestjs/common": "^8.2.6",
     "@nestjs/config": "^1.1.5",
-    "@nestjs/core": "^8.2.4",
+    "@nestjs/core": "^8.2.6",
     "@nestjs/graphql": "^9.1.2",
     "@nestjs/jwt": "^8.0.0",
     "@nestjs/microservices": "^8.2.4",
@@ -78,7 +78,7 @@
     "@semantic-release/npm": "^9.0.0",
     "@semantic-release/release-notes-generator": "^10.0.3",
     "apollo-server-errors": "^3.3.0",
-    "apollo-server-express": "^3.5.0",
+    "apollo-server-express": "^3.6.2",
     "bcrypt": "^5.0.1",
     "class-validator": "^0.13.2",
     "graphql": "^15",
@@ -97,5 +97,9 @@
     "semantic-release": "^19.0.2",
     "typeorm": "^0.2.41",
     "winston": "^3.3.3"
+  },
+  "resolutions": {
+    "follow-redirects": "^1.14.7",
+    "node-fetch": "^2.6.7"
   }
 }
