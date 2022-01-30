@@ -1,3 +1,10 @@
+# [2.1.0](https://github.com/yggdrasil-platform/yggdrasil/compare/v2.0.0...v2.1.0) (2022-01-30)
+
+
+### Features
+
+* add web app ([#4](https://github.com/yggdrasil-platform/yggdrasil/issues/4)) ([079135d](https://github.com/yggdrasil-platform/yggdrasil/commit/079135d2d86b54f6f31b8d496a85b808325811e3))
+
 # [2.0.0](https://github.com/yggdrasil-platform/yggdrasil/compare/v1.1.0...v2.0.0) (2022-01-30)
 
 

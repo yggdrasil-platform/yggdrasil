@@ -1,6 +1,6 @@
 {
   "name": "yggdrasil",
-  "version": "2.0.0",
+  "version": "2.1.0",
   "description": "The core of the Yggdrasil platform",
   "main": "dist/heimdallr/main.js",
   "author": {
