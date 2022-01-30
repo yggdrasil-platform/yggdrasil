@@ -22,15 +22,15 @@ import { UsersModule } from './user';
       },
       validationSchema: Joi.object<IEnvironmentVariables, true>({
         APP_NAME: Joi.string().default('heimdallr'),
-        AUTH_SERVICE_HOST: Joi.string().required(),
-        AUTH_SERVICE_PORT: Joi.number().required(),
+        AUTH_APP_HOST: Joi.string().required(),
+        AUTH_APP_PORT: Joi.number().required(),
         LOG_LEVEL: Joi.string()
           .default('error')
           .valid('debug', 'error', 'info', 'silent', 'warn'),
         NODE_ENV: Joi.string().required(),
         PORT: Joi.number().default(3000),
-        USER_SERVICE_HOST: Joi.string().required(),
-        USER_SERVICE_PORT: Joi.number().required(),
+        USER_APP_HOST: Joi.string().required(),
+        USER_APP_PORT: Joi.number().required(),
         VERSION: Joi.string().required(),
       }),
     }),

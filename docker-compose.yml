@@ -17,12 +17,32 @@ services:
     image: yggdrasil/heimdallr
     networks:
       - yggdrasil
-      - midgard
+      - bifrost
     ports:
       - "3000:3000"
     volumes:
       - ./node_modules:/usr/app/node_modules:cached
       - ./apps/heimdallr:/usr/app/apps/heimdallr:cached
+      - ./libs:/usr/app/libs:cached
+
+  midgard:
+    build:
+      context: .
+      dockerfile: images/node/Dockerfile
+      target: application
+    container_name: midgard
+    entrypoint: "yarn start:watch"
+    env_file:
+      - apps/midgard/.env.dev
+    image: yggdrasil/midgard
+    networks:
+      - yggdrasil
+      - bifrost
+    ports:
+      - "8080:8080"
+    volumes:
+      - ./node_modules:/usr/app/node_modules:cached
+      - ./apps/midgard:/usr/app/apps/midgard:cached
       - ./libs:/usr/app/libs:cached
 
   mimir:
@@ -79,7 +99,7 @@ services:
     image: yggdrasil/db
     networks:
       - yggdrasil
-      - midgard
+      - bifrost
     ports:
       - "5432:5432"
 
@@ -90,7 +110,7 @@ services:
     image: yggdrasil/mimisbrunnr
     networks:
       - yggdrasil
-      - midgard
+      - bifrost
     ports:
       - "6379:6379"
 
@@ -98,5 +118,5 @@ networks:
   yggdrasil:
     internal: true
     name: yggdrasil
-  midgard:
-    name: midgard
+  bifrost:
+    name: bifrost

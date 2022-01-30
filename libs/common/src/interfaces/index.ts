@@ -1,3 +1,4 @@
+export { default as IApplicationsEnvironmentVariables } from './IApplicationsEnvironmentVariables';
 export { default as IAuthenticatePayload } from './IAuthenticatePayload';
 export { default as IBaseEnvironmentVariables } from './IBaseEnvironmentVariables';
 export { default as ICreateAuthenticationPayload } from './ICreateAuthenticationPayload';
