@@ -52,8 +52,8 @@ services:
       target: application
     container_name: mimir
     depends_on:
-      - mongo
-      - mimisbrunnr
+      - mongodb
+      - redis
     entrypoint: "yarn start:watch"
     env_file:
       - apps/mimir/.env.dev
@@ -74,7 +74,7 @@ services:
       target: application
     container_name: valhalla
     depends_on:
-      - mongo
+      - mongodb
     entrypoint: "yarn start:watch"
     env_file:
       - apps/valhalla/.env.dev
@@ -89,25 +89,25 @@ services:
       - ./libs:/usr/app/libs:cached
 
   # Databases
-  mongo:
+  mongodb:
     build:
       context: images/mongo
-    container_name: mongo
+    container_name: mongodb
     environment:
       MONGO_INITDB_ROOT_PASSWORD: password
       MONGO_INITDB_ROOT_USERNAME: admin
-    image: yggdrasil/mongo
+    image: yggdrasil/mongodb
     networks:
       - yggdrasil
       - bifrost
     ports:
       - "27017:27017"
 
-  mimisbrunnr:
-    container_name: mimisbrunnr
+  redis:
     build:
       context: images/redis
-    image: yggdrasil/mimisbrunnr
+    container_name: redis
+    image: yggdrasil/redis
     networks:
       - yggdrasil
       - bifrost

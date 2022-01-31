@@ -50,6 +50,7 @@ import { SessionsModule } from './session';
       useFactory: (
         configService: ConfigService<IEnvironmentVariables, true>,
       ): MongooseModuleOptions => ({
+        appName: configService.get<string>('APP_NAME'),
         authSource: 'admin',
         connectionName: configService.get<string>('APP_NAME'),
         dbName: configService.get<string>('MONGO_NAME'),
