@@ -93,7 +93,7 @@ yarn test:e2e
 
 > 💡 **TIP:** If you want to not run all tests in the script, for instance you want to use an external test runner in your IDE, you can start the testing docker containers using:
 > ```shell
-> docker-compose -f docker-compose.test.yml up
+> docker-compose -f docker-compose.test.yml -p yggdrasil_test up
 > ```
 > Then once the containers are up and running, you can use `jest` (ensure you use the `--runInBand` flag because a database is used and will cause data integrity problems):
 > ```shell
