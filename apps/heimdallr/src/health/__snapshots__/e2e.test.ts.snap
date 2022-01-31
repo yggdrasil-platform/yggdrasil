@@ -12,7 +12,7 @@ Array [
       },
       "error": Object {},
       "info": Object {
-        "database": Object {
+        "mongodb": Object {
           "status": "up",
         },
       },
@@ -25,7 +25,7 @@ Array [
     "environment": "test",
     "health": Object {
       "details": Object {
-        "database": Object {
+        "mongodb": Object {
           "status": "up",
         },
       },
