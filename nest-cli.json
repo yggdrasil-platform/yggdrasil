@@ -53,6 +53,15 @@
         "tsConfigPath": "apps/mimir/tsconfig.json"
       }
     },
+    "nidavellir": {
+      "type": "application",
+      "root": "apps/nidavellir",
+      "entryFile": "main",
+      "sourceRoot": "apps/nidavellir/src",
+      "compilerOptions": {
+        "tsConfigPath": "apps/nidavellir/tsconfig.json"
+      }
+    },
     "valhalla": {
       "type": "application",
       "root": "apps/valhalla",
