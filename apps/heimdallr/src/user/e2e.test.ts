@@ -1,12 +1,17 @@
+import { SchemaFactory } from '@nestjs/mongoose';
 import faker from 'faker';
 import { agent as request, Response, SuperAgentTest } from 'supertest';
-import { Connection, getRepository, Repository } from 'typeorm';
+import { Model } from 'mongoose';
 
 // Enums
 import { Routes } from '@libs/common/enums';
 
 // Inputs
 import { RegisterInput } from '@apps/heimdallr/src/user/inputs';
+
+// Interfaces
+import { IDocumentModel } from '@libs/common/interfaces';
+import { IMongoConnection } from '@test/interfaces';
 
 // Models
 import { Authentication, User } from '@libs/common/models';
@@ -21,21 +26,21 @@ import { me } from '@test/queries';
 import {
   closeConnections,
   getUserIdFromJwt,
-  setupDatabases,
+  createConnections,
   testGqlAuthorization,
 } from '@test/utils';
 
 describe(__filename, () => {
   let agent: SuperAgentTest;
-  let connections: Connection[] = [];
+  let connections: IMongoConnection[] = [];
   let registerInput: RegisterInput = {
     firstName: faker.name.firstName(),
     lastName: faker.name.lastName(),
     password: 'password123',
     username: faker.internet.email(),
   };
-  let authenticationRepository: Repository<Authentication>;
-  let userRepository: Repository<User>;
+  let authenticationModel: Model<IDocumentModel<Authentication>>;
+  let userModel: Model<IDocumentModel<User>>;
 
   beforeAll(async () => {
     agent = request(
@@ -44,9 +49,28 @@ describe(__filename, () => {
   });
 
   beforeEach(async () => {
-    connections = await setupDatabases();
-    authenticationRepository = getRepository(Authentication, 'mimir');
-    userRepository = getRepository(User, 'valhalla');
+    let mimirConnection: IMongoConnection | undefined;
+    let valhallaConnection: IMongoConnection | undefined;
+
+    connections = await createConnections(['mimir', 'valhalla']);
+    mimirConnection = connections.find((value) => value.database === 'mimir');
+    valhallaConnection = connections.find(
+      (value) => value.database === 'valhalla',
+    );
+
+    if (mimirConnection) {
+      authenticationModel = mimirConnection.connection.model(
+        Authentication.name,
+        SchemaFactory.createForClass(Authentication),
+      );
+    }
+
+    if (valhallaConnection) {
+      userModel = valhallaConnection.connection.model(
+        User.name,
+        SchemaFactory.createForClass(User),
+      );
+    }
   });
 
   afterEach(async () => {
@@ -55,6 +79,7 @@ describe(__filename, () => {
 
   describe(`${Routes.GraphQL}#register()`, () => {
     it('should create a new user', async () => {
+      // Act
       const response: Response = await agent
         .post(Routes.GraphQL)
         .send({
@@ -64,26 +89,21 @@ describe(__filename, () => {
           },
         })
         .expect(200);
-      let authentication: Authentication | undefined;
+      let authenticationDoc: IDocumentModel<Authentication> | null;
+      let userDoc: IDocumentModel<User> | null;
       let userId: string | undefined;
-      let user: User | undefined;
 
+      // Assert
       expect(response.body.data?.register?.accessToken).toBeDefined();
 
       userId = getUserIdFromJwt(response.body.data.register.accessToken);
-      authentication = await authenticationRepository.findOne({
-        where: {
-          userId,
-        },
+      authenticationDoc = await authenticationModel.findOne({
+        userId,
       });
-      user = await userRepository.findOne({
-        where: {
-          id: userId,
-        },
-      });
+      userDoc = await userModel.findById(userId);
 
-      expect(authentication).toBeDefined();
-      expect(user).toBeDefined();
+      expect(authenticationDoc).not.toBeNull();
+      expect(userDoc).not.toBeNull();
     });
   });
 

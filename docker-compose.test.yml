@@ -29,7 +29,7 @@ services:
       - ./node_modules:/usr/app/node_modules:cached
       - ./apps/heimdallr:/usr/app/apps/heimdallr:cached
       - ./libs:/usr/app/libs:cached
-  
+
   mimir_test:
     build:
       context: .
@@ -37,8 +37,8 @@ services:
       target: application
     container_name: mimir_test
     depends_on:
-      - db_test
-      - mimisbrunnr_test
+      - mongodb_test
+      - redis_test
     entrypoint: "yarn start"
     env_file:
       - apps/mimir/.env.test
@@ -59,7 +59,7 @@ services:
       target: application
     container_name: valhalla_test
     depends_on:
-      - db_test
+      - mongodb_test
     entrypoint: "yarn start"
     env_file:
       - apps/valhalla/.env.test
@@ -73,25 +73,25 @@ services:
       - ./apps/valhalla:/usr/app/apps/valhalla:cached
       - ./libs:/usr/app/libs:cached
 
-  db_test:
+  mongodb_test:
     build:
-      context: images/postgres
-    container_name: db_test
+      context: images/mongo
+    container_name: mongodb_test
     environment:
-      POSTGRES_PASSWORD: ${EXTERNAL_DB_PASSWORD:-password}
-      POSTGRES_USER: ${EXTERNAL_DB_USER:-admin}
-    image: yggdrasil/db_test
+      MONGO_INITDB_ROOT_PASSWORD: ${EXTERNAL_MONGO_PASSWORD:-password}
+      MONGO_INITDB_ROOT_USERNAME: ${EXTERNAL_MONGO_USER:-admin}
+    image: yggdrasil/mongodb_test
     networks:
       - yggdrasil_test
       - bifrost_test
     ports:
-      - "${EXTERNAL_DB_PORT:-5433}:5432"
+      - "${EXTERNAL_MONGO_PORT:-27018}:27017"
 
-  mimisbrunnr_test:
-    container_name: mimisbrunnr_test
+  redis_test:
+    container_name: redis_test
     build:
       context: images/redis
-    image: yggdrasil/mimisbrunnr_test
+    image: yggdrasil/redis_test
     networks:
       - yggdrasil_test
       - bifrost_test

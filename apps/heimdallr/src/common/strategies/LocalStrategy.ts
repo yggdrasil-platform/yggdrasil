@@ -28,7 +28,7 @@ export default class LocalStrategy extends PassportStrategy(Strategy) {
 
     isValid = await this.authService.authenticate({
       password,
-      userId: user.id,
+      userId: user._id,
     });
 
     if (!isValid) {

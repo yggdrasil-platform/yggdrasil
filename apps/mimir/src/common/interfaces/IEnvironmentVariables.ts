@@ -1,14 +1,14 @@
 import {
   IApplicationsEnvironmentVariables,
   IBaseEnvironmentVariables,
-  IDatabaseEnvironmentVariables,
+  IMongoEnvironmentVariables,
   IRedisEnvironmentVariables,
 } from '@libs/common/interfaces';
 
 interface IEnvironmentVariables
   extends IApplicationsEnvironmentVariables,
     IBaseEnvironmentVariables,
-    IDatabaseEnvironmentVariables,
+    IMongoEnvironmentVariables,
     IRedisEnvironmentVariables {
   JWT_SECRET_KEY: string;
 }

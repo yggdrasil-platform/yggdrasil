@@ -1,7 +1,7 @@
 const me: string = `
   query {
     me {
-      id
+      _id
     }
   }
 `;

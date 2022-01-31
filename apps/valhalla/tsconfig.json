@@ -4,5 +4,5 @@
     "declaration": false,
     "lib": ["ES6"]
   },
-  "include": ["migrations/*", "src/**/*"]
+  "include": ["src/**/*"]
 }

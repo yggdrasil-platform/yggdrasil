@@ -1,23 +1,26 @@
 import { HttpStatus } from '@nestjs/common';
+import { SchemaFactory } from '@nestjs/mongoose';
 import faker from 'faker';
-import { agent as request, SuperAgentTest } from 'supertest';
-import { Connection } from 'typeorm';
+import { Model } from 'mongoose';
+import { agent as request, Response, SuperAgentTest } from 'supertest';
 
 // Enums
 import { Routes } from '@libs/common/enums';
 
+// Interfaces
+import { IDocumentModel } from '@libs/common/interfaces';
+import { IMongoConnection } from '@test/interfaces';
+
 // Models
 import { User } from '@libs/common/models';
 
-// Seeds
-import { usersSeed } from '@test/seeds';
-
 // Utils
-import { closeConnections, setupDatabases } from '@test/utils';
+import { closeConnections, createConnections } from '@test/utils';
 
 describe(__filename, () => {
   let agent: SuperAgentTest;
-  let connections: Connection[] = [];
+  let connections: IMongoConnection[] = [];
+  let userModel: Model<IDocumentModel<User>>;
 
   beforeAll(async () => {
     agent = request(
@@ -26,7 +29,18 @@ describe(__filename, () => {
   });
 
   beforeEach(async () => {
-    connections = await setupDatabases();
+    let valhallaConnection: IMongoConnection | undefined;
+
+    connections = await createConnections(['mimir', 'valhalla'], {
+      seed: true,
+    });
+    valhallaConnection = connections.find(
+      (value) => value.database === 'valhalla',
+    );
+
+    if (valhallaConnection) {
+      userModel = valhallaConnection.connection.model(User.name);
+    }
   });
 
   afterEach(async () => {
@@ -45,27 +59,28 @@ describe(__filename, () => {
     });
 
     it(`should return ${HttpStatus.UNAUTHORIZED} if the user password is incorrect`, async () => {
-      const user: User | undefined = usersSeed.seeds.shift();
+      const userDoc: IDocumentModel<User> | null = await userModel.findOne({});
 
       await agent
         .post(Routes.Login)
         .send({
           password: 'unknown',
-          username: user?.username,
+          username: userDoc?.username,
         })
         .expect(HttpStatus.UNAUTHORIZED);
     });
 
     it(`should return ${HttpStatus.CREATED} if the user password is correct`, async () => {
-      const user: User | undefined = usersSeed.seeds.shift();
-
-      await agent
+      const userDoc: IDocumentModel<User> | null = await userModel.findOne({});
+      const response: Response = await agent
         .post(Routes.Login)
         .send({
           password: 'password123',
-          username: user?.username,
+          username: userDoc?.username,
         })
         .expect(HttpStatus.CREATED);
+
+      expect(response.body?.accessToken).toBeDefined();
     });
   });
 });

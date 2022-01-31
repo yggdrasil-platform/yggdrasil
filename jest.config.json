@@ -14,6 +14,7 @@
   },
   "rootDir": ".",
   "roots": ["<rootDir>/apps/", "<rootDir>/libs/"],
+  "setupFilesAfterEnv": ["<rootDir>/test/setup.ts"],
   "testRegex": ".*\\.test\\.ts$",
   "transform": {
     "^.+\\.(t|j)s$": "ts-jest"

@@ -29,13 +29,12 @@ export default class UsersResolver {
     @Args('input') { password, ...input }: RegisterInput,
   ): Promise<Session> {
     const user: User = await this.usersService.create(input);
-
     await this.authService.createAuthentication({
       password,
-      userId: user.id,
+      userId: user._id,
     });
 
-    return await this.authService.createSession(user.id);
+    return await this.authService.createSession(user._id);
   }
 
   @UseGuards(GqlAuthGuard)

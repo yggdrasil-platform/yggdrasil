@@ -1,11 +1,11 @@
 import {
   IApplicationsEnvironmentVariables,
   IBaseEnvironmentVariables,
-  IDatabaseEnvironmentVariables,
+  IMongoEnvironmentVariables,
 } from '@libs/common/interfaces';
 
 type IEnvironmentVariables = IApplicationsEnvironmentVariables &
   IBaseEnvironmentVariables &
-  IDatabaseEnvironmentVariables;
+  IMongoEnvironmentVariables;
 
 export default IEnvironmentVariables;

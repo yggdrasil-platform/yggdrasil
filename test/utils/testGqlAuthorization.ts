@@ -7,13 +7,11 @@ import { Routes } from '@libs/common/enums';
 import { isUnauthorizedError } from '@test/utils';
 
 /**
- * Convenience function to test that a GraphQL query returns an unauthorized
- * error.
- * @param {SuperAgentTest} request an instance of a supertest
- * @param {string} query a GraphQL query/mutation literal
- * @param {Record<string, unknown>} variables [optional] any variables to pass to the
- * GraphQL query/mutation
- * @param {string} authHeader [optional] an authorization header value
+ * Convenience function to test that a GraphQL query returns an unauthorized error.
+ * @param {SuperAgentTest} request - an instance of a supertest.
+ * @param {string} query - a GraphQL query/mutation literal.
+ * @param {Record<string, unknown>} variables [optional] - any variables to pass to the GraphQL query/mutation.
+ * @param {string} authHeader [optional] - an authorization header value.
  */
 export default async function testGqlAuthorization(
   request: SuperAgentTest,

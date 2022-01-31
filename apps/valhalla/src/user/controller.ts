@@ -44,10 +44,10 @@ export default class UsersController {
 
   @MessagePattern(UserMessagePatterns.FindById)
   public async findById(
-    @Payload() id: number,
+    @Payload() id: string,
   ): Promise<ITcpResponse<User | null>> {
     try {
-      return [null, (await this.userService.findById(id)) || null];
+      return [null, await this.userService.findById(id)];
     } catch (error) {
       this.logger.error(error);
 
@@ -60,7 +60,7 @@ export default class UsersController {
     @Payload() username: string,
   ): Promise<ITcpResponse<User | null>> {
     try {
-      return [null, (await this.userService.findByUsername(username)) || null];
+      return [null, await this.userService.findByUsername(username)];
     } catch (error) {
       this.logger.error(error);
 
