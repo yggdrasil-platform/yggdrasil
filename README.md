@@ -9,7 +9,6 @@ The monorepo that contains all the services that make up the Yggdrasil platform.
   - [Prerequisites](#prerequisites)
   - [Getting started](#getting-started)
   - [Creating a new application](#creating-a-new-application)
-  - [Generating a migration](#generating-a-migration)
 - [Testing](#testing)
   - [Running the e2e tests](#running-the-e2e-tests)
 
@@ -41,7 +40,7 @@ docker-compose up
 
 ### Creating a new application
 
-1. TBC
+1. TODO: add app to `nest-cli.json`
 
 2. Add the new application to the [docker-compose.yml](./docker-compose.yml) using the format similar to the others:
 ```yaml
@@ -65,15 +64,6 @@ awesome_service:
     - ./node_modules:/usr/app/node_modules:cached # use the local node_modules
     - ./apps/awesome_service:/usr/app/apps/awesome_service:cached
     - ./libs:/usr/app/libs:cached
-```
-
-<sup>[Back to top ^](#table-of-contents)</sup>
-
-### Generating a migration
-
-1. To generate a new migration use the following command:
-```bash
-yarn migrations:generate valhalla InsertMigrationNameHere
 ```
 
 <sup>[Back to top ^](#table-of-contents)</sup>
