@@ -1,3 +1,10 @@
+# [2.2.0](https://github.com/yggdrasil-platform/yggdrasil/compare/v2.1.0...v2.2.0) (2022-01-31)
+
+
+### Features
+
+* use document dbs for apps ([#5](https://github.com/yggdrasil-platform/yggdrasil/issues/5)) ([4d13385](https://github.com/yggdrasil-platform/yggdrasil/commit/4d133851287d1da542b1ff6b5ce7083fbfa331d2))
+
 # [2.1.0](https://github.com/yggdrasil-platform/yggdrasil/compare/v2.0.0...v2.1.0) (2022-01-30)
 
 
