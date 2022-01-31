@@ -1,14 +1,17 @@
-import { Connection, EntityTarget } from 'typeorm';
+import { Connection, Model } from 'mongoose';
+
+// Interfaces
+import { IDocumentModel } from '@libs/common/interfaces';
+import { ISeed } from '@test/interfaces';
 
 export default async function runSeed<T>(
   connection: Connection,
-  entityTarget: EntityTarget<T>,
-  seeds: T[],
+  seed: ISeed<T>,
 ): Promise<void> {
-  await connection
-    .createQueryBuilder()
-    .insert()
-    .into<T>(entityTarget)
-    .values(seeds)
-    .execute();
+  const model: Model<IDocumentModel<T>> = connection.model<IDocumentModel<T>>(
+    seed.name,
+    seed.schema,
+  );
+
+  await model.insertMany(seed.seeds);
 }

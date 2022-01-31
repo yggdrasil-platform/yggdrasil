@@ -1,7 +1,11 @@
-import { EntityTarget } from 'typeorm';
+import { Schema } from 'mongoose';
+
+// Interfaces
+import { IDocumentModel } from '@libs/common/interfaces';
 
 interface ISeed<T> {
-  entityTarget: EntityTarget<T>;
+  name: string;
+  schema: Schema<IDocumentModel<T>>;
   seeds: T[];
 }
 
