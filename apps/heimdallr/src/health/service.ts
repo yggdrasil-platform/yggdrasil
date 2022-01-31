@@ -12,6 +12,7 @@ import { IHealth } from '@libs/common/interfaces';
 export default class HealthService {
   constructor(
     @Inject(Providers.AuthClient) private authClient: ClientProxy,
+    @Inject(Providers.FileClient) private fileClient: ClientProxy,
     @Inject(Providers.UserClient) private userClient: ClientProxy,
   ) {}
 
@@ -19,6 +20,9 @@ export default class HealthService {
     return [
       await firstValueFrom(
         this.authClient.send<IHealth, any>(DefaultMessagePatterns.Health, {}),
+      ),
+      await firstValueFrom(
+        this.fileClient.send<IHealth, any>(DefaultMessagePatterns.Health, {}),
       ),
       await firstValueFrom(
         this.userClient.send<IHealth, any>(DefaultMessagePatterns.Health, {}),
