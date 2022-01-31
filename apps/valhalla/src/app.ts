@@ -22,6 +22,8 @@ import { UsersModule } from './user';
         APP_NAME: Joi.string().default('valhalla'),
         AUTH_APP_HOST: Joi.string().required(),
         AUTH_APP_PORT: Joi.number().required(),
+        FILE_APP_HOST: Joi.string().required(),
+        FILE_APP_PORT: Joi.number().required(),
         MONGO_HOST: Joi.string().required(),
         MONGO_NAME: Joi.string().required(),
         MONGO_PASSWORD: Joi.string().required(),

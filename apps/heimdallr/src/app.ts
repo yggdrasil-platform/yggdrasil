@@ -24,6 +24,8 @@ import { UsersModule } from './user';
         APP_NAME: Joi.string().default('heimdallr'),
         AUTH_APP_HOST: Joi.string().required(),
         AUTH_APP_PORT: Joi.number().required(),
+        FILE_APP_HOST: Joi.string().required(),
+        FILE_APP_PORT: Joi.number().required(),
         LOG_LEVEL: Joi.string()
           .default('error')
           .valid('debug', 'error', 'info', 'silent', 'warn'),
