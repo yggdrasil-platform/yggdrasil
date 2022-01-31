@@ -5,7 +5,7 @@ import { IMongoConnection } from '@test/interfaces';
 
 /**
  * Convenience function that simply closes each connection. It will attempt to close all connections.
- * @param {IMongoConnection[]} connections an array of connection objects.
+ * @param {IMongoConnection[]} connections - an array of connection objects.
  */
 export default async function closeConnections(
   connections: IMongoConnection[],

@@ -10,18 +10,24 @@ import { runSeed } from '@test/utils';
 
 const { readdir } = promises;
 
-interface IGetConnectionsOptions {
+/**
+ * A set of options to customise what happens when connecting the databases.
+ * * {boolean} seed [optional] - whether to drop the databases and sed with dummy data, defaults to `false`.
+ * @interface
+ */
+interface ICreateConnectionsOptions {
   seed?: boolean;
 }
 
 /**
- * Creates connections to each of the services databases and drops the schema and seeds each database with fresh
- * data.
- * @returns {Connection[]} a connection for each service.
+ * Convenience function that connects to each MongoDB database, through a separate connection, and seeds each database. Before the database is seeded, the database is dropped.
+ * @param {string[]} databases - a list of databases to connect to.
+ * @param {ICreateConnectionsOptions} options [optional] - a set of options to customise what happens when connecting the databases.
+ * @returns {IMongoConnection[]} a list of connections for each of the databases.
  */
 export default async function createConnections(
   databases: string[],
-  options: IGetConnectionsOptions = {
+  options: ICreateConnectionsOptions = {
     seed: false,
   },
 ): Promise<IMongoConnection[]> {
