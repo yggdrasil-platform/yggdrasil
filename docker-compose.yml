@@ -67,6 +67,27 @@ services:
       - ./apps/mimir:/usr/app/apps/mimir:cached
       - ./libs:/usr/app/libs:cached
 
+  nidavellir:
+    build:
+      context: .
+      dockerfile: images/node/Dockerfile
+      target: application
+    container_name: nidavellir
+    depends_on:
+      - mongodb
+    entrypoint: "yarn start:watch"
+    env_file:
+      - apps/nidavellir/.env.dev
+    image: yggdrasil/nidavellir
+    networks:
+      - yggdrasil
+    ports:
+      - "3000"
+    volumes:
+      - ./node_modules:/usr/app/node_modules:cached
+      - ./apps/nidavellir:/usr/app/apps/nidavellir:cached
+      - ./libs:/usr/app/libs:cached
+
   valhalla:
     build:
       context: .
